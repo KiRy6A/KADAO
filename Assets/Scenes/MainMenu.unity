@@ -2871,7 +2871,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1611194747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df98b023e73d42245b29043cdeb95f0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9023748f15836ea4992b0363dd6f830a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1769917048
@@ -3260,9 +3260,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1990191168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6b029fd78c0c74abb82c54b2ec56ea, type: 3}
+  m_Script: {fileID: 11500000, guid: b0564df2c5ddcb94c832fd6eab17b7ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sliderformusic: {fileID: 0}
+  sliderforsounds: {fileID: 0}
 --- !u!1 &2048533247
 GameObject:
   m_ObjectHideFlags: 0
