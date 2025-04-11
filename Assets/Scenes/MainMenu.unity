@@ -3263,8 +3263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0564df2c5ddcb94c832fd6eab17b7ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderformusic: {fileID: 0}
-  sliderforsounds: {fileID: 0}
+  sliderformusic: {fileID: 75866093}
+  sliderforsounds: {fileID: 1173147907}
 --- !u!1 &2048533247
 GameObject:
   m_ObjectHideFlags: 0
