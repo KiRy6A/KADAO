@@ -9,6 +9,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] GameObject itemtile;
     [SerializeField] GameObject starttile;
     [SerializeField] GameObject finishtile;
+    [SerializeField] GameObject[] floortile;
     [SerializeField] int sizer;
     [SerializeField] int sized;
     [SerializeField] short numbr;
@@ -946,12 +947,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 else
                     mapwithitems[i, j] = 0;
 
-        for (int i=0;i<sized+1; i++)
-            for(int j=0;j<sizer+1; j++)
+        for (int i=0;i<sized; i++)
+            for(int j=0;j<sizer; j++)
             {
                 Vector3 pos = new Vector3(i,j, 1f);
                 if (mapwithitems[i,j] != 2)
                 {
+                    int s=random.Next(-30, 5);
+                    if (s < 0)
+                        s = 0;
+                    Instantiate(floortile[s], new Vector3(pos.x,pos.y,10f), UnityEngine.Quaternion.identity);
                     if (map[i, j] ==1)
                         Instantiate(tile, pos, UnityEngine.Quaternion.identity);
                     else if (map[i, j] == 4)
