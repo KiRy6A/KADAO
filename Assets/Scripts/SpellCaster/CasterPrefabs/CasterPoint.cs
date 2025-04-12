@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class CasterPoint : MonoBehaviour
 {
 	private void OnTriggerStay2D(Collider2D collision)
 	{
