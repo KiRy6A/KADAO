@@ -46,4 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _outlinePrefab: {fileID: 9019225745485253213, guid: 515d1aee9bf05f24483c7bd6d149d754, type: 3}
   _spellPrefab: {fileID: 6912393468815953102, guid: 7b33fab36996e7146aa9a9eab1b644a2, type: 3}
-  _templateCast: {fileID: -6888756438569675735, guid: 7abc2bf42f615e14e80948318441c49e, type: 3}
+  _templateCast: {fileID: 3763752930381237044, guid: b1666ce91c4e8014b8866e469574c2ab, type: 3}
+  _speed: 500
