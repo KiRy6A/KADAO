@@ -34,6 +34,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     [SerializeField] GameObject MapGenerator;
 
+    short floorcounter;
+
     System.Random random = new System.Random();
     public static void RandomizeArray<T>(T[] array)
     {
@@ -949,6 +951,17 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("floorcounter"))
+        {
+            PlayerPrefs.SetInt("floorcounter", 0);
+            PlayerPrefs.Save();
+        }
+        PlayerPrefs.SetInt("floorcounter", PlayerPrefs.GetInt("floorcounter")+1);
+        PlayerPrefs.Save();
+        floorcounter = (short)PlayerPrefs.GetInt("floorcounter");
+
+        Debug.Log(floorcounter);
+
         int[,] map = GenerateRooms(sizer, sized, numbr);
         Vector3[] startandfinish = GenerateStartAndFinish(map, sized, sizer);
         map = MakePointBigger(map, startandfinish[0], -2);
