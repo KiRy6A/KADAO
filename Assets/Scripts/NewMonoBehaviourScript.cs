@@ -9,11 +9,11 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] GameObject itemtile;
     [SerializeField] GameObject starttile;
     [SerializeField] GameObject finishtile;
-    [SerializeField] GameObject[] floortile;
     [SerializeField] int sizer;
     [SerializeField] int sized;
     [SerializeField] short numbr;
 
+    [SerializeField] GameObject MapGenerator;
 
     System.Random random = new System.Random();
     public static void RandomizeArray<T>(T[] array)
@@ -953,10 +953,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 Vector3 pos = new Vector3(i,j, 1f);
                 if (mapwithitems[i,j] != 2)
                 {
-                    int s=random.Next(-30, 5);
-                    if (s < 0)
-                        s = 0;
-                    Instantiate(floortile[s], new Vector3(pos.x,pos.y,10f), UnityEngine.Quaternion.identity);
                     if (map[i, j] ==1)
                         Instantiate(tile, pos, UnityEngine.Quaternion.identity);
                     else if (map[i, j] == 4)
@@ -967,6 +963,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                         Instantiate(finishtile, pos, UnityEngine.Quaternion.identity);
                 }
             }
+        MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map);
     }
 
 }
