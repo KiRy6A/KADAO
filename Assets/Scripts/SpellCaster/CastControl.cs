@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandler*/ IDragHandler, IPointerUpHandler
 {
@@ -20,6 +21,8 @@ public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandl
 	private CanvasGroup _allCanvasGroup;
 	private CanvasGroup _canvasGroup;
 
+	public CanvasScaler _canvasScaler;
+
 	public bool isWriting
 	{
 		private set { _canvasGroup.blocksRaycasts = !value; _castCollider.enabled = value;}
@@ -28,12 +31,14 @@ public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandl
 
 	private void Start()
 	{
+		_canvasScaler = GetComponentInParent<CanvasScaler>();
 		_camera = Camera.main;
 		_castLine = transform.GetChild(0).GetComponent<LineRenderer>();
 		_castCollider = transform.GetChild(0).GetComponent<CircleCollider2D>();
 		_allCanvasGroup = transform.parent.GetComponentInParent<CanvasGroup>();
 		_canvasGroup = GetComponentInParent<CanvasGroup>();
 
+		//_castLine.transform.position = (Vector2)_camera.transform.position;
 		_castLine.positionCount = 0;
 		_castCollider.enabled = false;
 	}
@@ -49,7 +54,7 @@ public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandl
 		if (isWriting)
 		{
 			_castLine.positionCount += 1;
-			Vector3 nextPos = _camera.ScreenToWorldPoint(eventData.position) - _camera.transform.position;
+			Vector3 nextPos = (_camera.ScreenToWorldPoint(eventData.position)* _canvasScaler.scaleFactor - _camera.transform.position);
 			nextPos.z = 0;
 			_castCollider.offset = nextPos;
 			_castLine.SetPosition(_castLine.positionCount - 1, nextPos);

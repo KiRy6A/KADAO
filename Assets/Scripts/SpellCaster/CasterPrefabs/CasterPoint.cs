@@ -1,0 +1,13 @@
+using UnityEngine;
+
+public class NewMonoBehaviourScript : MonoBehaviour
+{
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		if(collision.tag == "Caster")
+		{
+			++GetComponentInParent<CastOutline>()._touchedPoints;
+			gameObject.SetActive(false);
+		}
+	}
+}
