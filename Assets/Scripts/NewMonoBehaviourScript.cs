@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     [SerializeField] GameObject tile;
@@ -12,6 +13,24 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] int sizer;
     [SerializeField] int sized;
     [SerializeField] short numbr;
+
+    [SerializeField] List<GameObject> floor;
+    [SerializeField] List<GameObject> upfloor;
+    [SerializeField] List<GameObject> downfloor;
+    [SerializeField] List<GameObject> floorcorners;
+    [SerializeField] GameObject rightfloor;
+    [SerializeField] GameObject leftfloor;
+
+    [SerializeField] List<GameObject> verticalwalls;
+    [SerializeField] List<GameObject> horizontalwalls;
+    [SerializeField] List<GameObject> cornerwalls;
+    [SerializeField] List<GameObject> downwalls;
+
+    [SerializeField] List<GameObject> leftwalls;
+    [SerializeField] List<GameObject> rightwalls;
+
+    [SerializeField] GameObject horizontaldoor;
+    [SerializeField] GameObject verticaldoor;
 
     [SerializeField] GameObject MapGenerator;
 
@@ -947,22 +966,110 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 else
                     mapwithitems[i, j] = 0;
 
-        for (int i=0;i<sized; i++)
-            for(int j=0;j<sizer; j++)
+
+
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
             {
                 Vector3 pos = new Vector3(i,j, 1f);
-                if (mapwithitems[i,j] != 2)
+
+                if (j == 0)
                 {
-                    if (map[i, j] ==1)
-                        Instantiate(tile, pos, UnityEngine.Quaternion.identity);
-                    else if (map[i, j] == 4)
-                        Instantiate(itemtile, pos, UnityEngine.Quaternion.identity);
-                    else if (map[i, j] == -1)
-                        Instantiate(starttile, pos, UnityEngine.Quaternion.identity);
-                    else if (map[i, j] == -2)
-                        Instantiate(finishtile, pos, UnityEngine.Quaternion.identity);
+                    if(i==0)
+                        Instantiate(cornerwalls[0], pos, UnityEngine.Quaternion.identity);
+                    else if(i==sized-1)
+                        Instantiate(cornerwalls[1], pos, UnityEngine.Quaternion.identity);
+                    else
+                        Instantiate(downwalls[random.Next(0, downwalls.Count)], pos, UnityEngine.Quaternion.identity);
                 }
+                else if(i==0)
+                    Instantiate(leftwalls[random.Next(0, leftwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                else if(i==sized-1)
+                    Instantiate(rightwalls[random.Next(0, rightwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                else if(j==sizer-1)
+                    if (map[i,j-1]==1 || map[i, j - 1] == 3)
+                        Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                    else
+                        Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                else if (map[i, j] == 2 || map[i, j] < 0)
+                {
+                    int[] dx = { -1, 1, 0, 0 };
+                    int[] dy = { 0, 0, -1, 1 };
+                    int counter = 0;
+                    for (int d = 0; d < 4; d++)
+                    {
+                        if (map[i + dx[d], j + dy[d]] == 1)
+                            counter++;
+                    }
+                    if (counter == 0)
+                        Instantiate(floor[random.Next(0, floor.Count)], pos, UnityEngine.Quaternion.identity);
+                    else if(counter ==1)
+                        if (map[i - 1, j] == 1)
+                            Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
+                        else if (map[i, j - 1] == 1)
+                            Instantiate(downfloor[random.Next(0, downfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                        else if (map[i + 1, j] == 1)
+                            Instantiate(rightfloor, pos, UnityEngine.Quaternion.identity);
+                        else
+                            Instantiate(upfloor[random.Next(0, upfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                    else if (counter == 2)
+                        if (map[i - 1, j] == 1 && map[i + 1, j] == 1)
+                            Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
+                        else if (map[i - 1, j] != 1 && map[i + 1, j] != 1)
+                            Instantiate(downfloor[random.Next(0, downfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                        else if (map[i - 1, j] == 1)
+                            if (map[i, j - 1] == 1)
+                                Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
+                            else
+                                Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
+                        else
+                        {
+                            if (map[i, j - 1] == 1)
+                                Instantiate(floorcorners[2], pos, UnityEngine.Quaternion.identity);
+                            else
+                                Instantiate(floorcorners[1], pos, UnityEngine.Quaternion.identity);
+                        }
+                    else
+                    {
+                        if (map[i - 1, j] != 1)
+                            Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
+                        else if (map[i, j - 1] != 1)
+                            Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
+                        else if (map[i + 1, j] != 1)
+                            Instantiate(floorcorners[4], pos, UnityEngine.Quaternion.identity);
+                        else
+                            Instantiate(floorcorners[4], pos, UnityEngine.Quaternion.identity);
+                    }
+
+
+                }
+                else if (map[i, j] == 3)
+                {
+                    if (map[i - 1, j] == 1)
+                    {
+                        Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
+                        pos = new Vector3(i, j, 0.9f);
+                        Instantiate(horizontaldoor, pos, UnityEngine.Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(upfloor[random.Next(0, upfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                        pos = new Vector3(i, j, 0.9f);
+                        Instantiate(verticaldoor, pos, UnityEngine.Quaternion.identity);
+                    }
+
+
+                }
+                else if(map[i, j]==1)
+                    if(map[i, j-1]==2 || map[i, j - 1] <0)
+                        Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                    else
+                        Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+
             }
+
+
+
         MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map);
     }
 
