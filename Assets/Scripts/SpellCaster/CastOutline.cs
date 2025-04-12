@@ -6,22 +6,30 @@ public class CastOutline : MonoBehaviour
 {
 	private bool _isFailed = false;
 	private bool _isCasted = false;
-	private int _size = 0;
+	private int _iPoints = 10;
 
-	public int _touchedPoints = 1;
+	public void UpdateNumberOfPoints()
+	{
+		int i = 0;
+		foreach (Transform g in GetComponentsInChildren<Transform>())
+		{
+			if(g.gameObject.activeInHierarchy) ++i;
+		}
+		Debug.Log(i);
+		_iPoints = i;
+	}
 
 	public bool IsFailed { get { return _isFailed; } }
 	public bool IsCasted {  get { return _isCasted; } }
 
 	private void Awake()
 	{
-		_size = transform.childCount;
 		StartCoroutine(CountPoints());
 	}
 
 	private IEnumerator CountPoints()
 	{
-		yield return new WaitUntil(() => _touchedPoints >= _size);
+		yield return new WaitWhile(() => _iPoints >= 2);
 		_isCasted = true;
 	}
 

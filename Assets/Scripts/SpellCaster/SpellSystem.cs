@@ -8,7 +8,7 @@ namespace SpellsSystem
 	{
 		[SerializeField] protected GameObject _outlinePrefab;
 		[SerializeField] protected GameObject _spellPrefab;
-
+		[SerializeField] protected Sprite _templateCast;
 		public abstract void ThrowSpell(Vector2 pos, Vector2 target);
 
 		public virtual GameObject CastSpell(Transform parent)

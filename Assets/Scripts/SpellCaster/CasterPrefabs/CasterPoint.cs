@@ -6,7 +6,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 	{
 		if(collision.tag == "Caster")
 		{
-			++GetComponentInParent<CastOutline>()._touchedPoints;
+			GetComponentInParent<CastOutline>().UpdateNumberOfPoints();
 			gameObject.SetActive(false);
 		}
 	}
@@ -15,7 +15,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 	{
 		if (collision.tag == "Caster")
 		{
-			++GetComponentInParent<CastOutline>()._touchedPoints;
+			GetComponentInParent<CastOutline>().UpdateNumberOfPoints();
 			gameObject.SetActive(false);
 		}
 	}
@@ -24,7 +24,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 	{
 		if (collision.tag == "Caster")
 		{
-			++GetComponentInParent<CastOutline>()._touchedPoints;
+			GetComponentInParent<CastOutline>().UpdateNumberOfPoints();
 			gameObject.SetActive(false);
 		}
 	}

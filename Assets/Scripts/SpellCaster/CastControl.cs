@@ -38,7 +38,7 @@ public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandl
 		_allCanvasGroup = transform.parent.GetComponentInParent<CanvasGroup>();
 		_canvasGroup = GetComponentInParent<CanvasGroup>();
 
-		//_castLine.transform.position = (Vector2)_camera.transform.position;
+		_castLine.transform.position = (Vector2)_camera.transform.position;
 		_castLine.positionCount = 0;
 		_castCollider.enabled = false;
 	}
