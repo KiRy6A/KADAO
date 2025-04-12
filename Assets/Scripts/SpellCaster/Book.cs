@@ -18,6 +18,7 @@ public class Book : MonoBehaviour
 	private Coroutine _castingCoroutine;
 
 	private bool _isCasted = false;
+	private bool _isWaitingUp = false;
 
 	private void Start()
 	{
@@ -34,7 +35,7 @@ public class Book : MonoBehaviour
 			_castingCoroutine = StartCoroutine(Casting());
 		}
 
-		if(Input.GetMouseButtonUp(0) && _castingObj != null && !_isCasted)
+		if(Input.GetMouseButtonUp(0) && _castingObj != null && !_isCasted && !_isWaitingUp)
 		{
 			StopCasting();
 			StopCoroutine(_castingCoroutine);
@@ -45,25 +46,30 @@ public class Book : MonoBehaviour
 	{
 		CastOutline castingOutline = _castingObj.GetComponent<CastOutline>();
 		yield return new WaitWhile(() => !castingOutline.IsCasted && !castingOutline.IsFailed && _castControl.GetComponent<CastControl>().isWriting);
-		//yield return new WaitWhile(() => Input.GetMouseButton(0));
-		Debug.Log(castingOutline.IsCasted.ToString() + ' ' + castingOutline.IsFailed.ToString());
+
+		_isWaitingUp = true;
+		yield return new WaitWhile(() => Input.GetMouseButtonUp(0) == false);
 		
-		if(castingOutline.IsFailed)
+		if(castingOutline.IsCasted && !castingOutline.IsFailed)
 		{
-			StopCasting();
-			//Debug.Log("Fail");
-		}
-		else if(castingOutline.IsCasted)
-		{
+			//DELETE!!!
+			FindAnyObjectByType<Player>().GetComponent<SpriteRenderer>().color = Color.red;
+			//DELETE!!!^^^^^^^^
+
 			_isCasted = true;
 			_castControl.GetComponent<CastControl>().enabled = false;
 			yield return new WaitWhile(() => Input.GetMouseButtonDown(0) != true);
 
+			//DELETE!!!
+			FindAnyObjectByType<Player>().GetComponent<SpriteRenderer>().color = Color.white;
+			//DELETE!!!^^^^^^^
+
 			_currentSpell.ThrowSpell(_player.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
 			_castControl.GetComponent<CastControl>().enabled = true;
 			StopCasting();
-			//Debug.Log("Throw");
 		}
+
+		StopCasting();
 	}
 
 	private void StopCasting()
@@ -71,5 +77,6 @@ public class Book : MonoBehaviour
 		Destroy(_castingObj);
 		_castingObj = null;
 		_isCasted = false;
+		_isWaitingUp = false;
 	}
 }

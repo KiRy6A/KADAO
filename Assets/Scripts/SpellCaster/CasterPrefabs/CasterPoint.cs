@@ -10,4 +10,22 @@ public class NewMonoBehaviourScript : MonoBehaviour
 			gameObject.SetActive(false);
 		}
 	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.tag == "Caster")
+		{
+			++GetComponentInParent<CastOutline>()._touchedPoints;
+			gameObject.SetActive(false);
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.tag == "Caster")
+		{
+			++GetComponentInParent<CastOutline>()._touchedPoints;
+			gameObject.SetActive(false);
+		}
+	}
 }
