@@ -12,15 +12,17 @@ public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandl
 
 	private Coroutine _coroutine;
 	private PointerEventData _pointerEventData;
-	private LineRenderer _castLine;
 	private Camera _camera;
+
+	private LineRenderer _castLine;
+	private CircleCollider2D _castCollider;
 
 	private CanvasGroup _allCanvasGroup;
 	private CanvasGroup _canvasGroup;
 
 	public bool isWriting
 	{
-		private set { _canvasGroup.blocksRaycasts = !value; }
+		private set { _canvasGroup.blocksRaycasts = !value; _castCollider.enabled = value;}
 		get { return !_canvasGroup.blocksRaycasts; }
 	}
 
@@ -28,10 +30,12 @@ public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandl
 	{
 		_camera = Camera.main;
 		_castLine = transform.GetChild(0).GetComponent<LineRenderer>();
+		_castCollider = transform.GetChild(0).GetComponent<CircleCollider2D>();
 		_allCanvasGroup = transform.parent.GetComponentInParent<CanvasGroup>();
 		_canvasGroup = GetComponentInParent<CanvasGroup>();
 
 		_castLine.positionCount = 0;
+		_castCollider.enabled = false;
 	}
 
 	public void OnPointerDown(PointerEventData eventData)
@@ -47,6 +51,7 @@ public class CastControl : MonoBehaviour, IPointerDownHandler, /*IBeginDragHandl
 			_castLine.positionCount += 1;
 			Vector3 nextPos = _camera.ScreenToWorldPoint(eventData.position) - _camera.transform.position;
 			nextPos.z = 0;
+			_castCollider.offset = nextPos;
 			_castLine.SetPosition(_castLine.positionCount - 1, nextPos);
 		}
 		else
