@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class FireBall : MonoBehaviour
+public class FireBall : MonoBehaviour, IDamage
 {
-	public float _damage = 1.0f;
+	[SerializeField] private int _damage = 1;
 
 	private bool _isExpleded = false;
 	private Rigidbody2D _rb;
@@ -26,7 +26,12 @@ public class FireBall : MonoBehaviour
 		_rb.linearVelocity = Vector2.zero;
 		GetComponent<CircleCollider2D>().radius *= 4;
 
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.2f);
 		Destroy(gameObject);
+	}
+
+	public int Damage()
+	{
+		return _damage;
 	}
 }
