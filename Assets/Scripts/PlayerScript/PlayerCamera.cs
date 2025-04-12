@@ -75,8 +75,8 @@ public class GenericCamera : MonoBehaviour
         {
             if (boundToRegion) ClampBounds(_boundsMin, _boundsMax);
             _target = new Vector3(_target.x + cameraOffset.x, _target.y + cameraOffset.y, cameraOffset.z);
-      _rb.linearVelocity = (_target - transform.position) * cameraSpeed;
-      //transform./*position = Vector3.Lerp*/Translate((_target - transform.position) * cameraSpeed/*, Time.smoothDeltaTime * cameraSpeed*/);
+            _rb.linearVelocity = (_target - transform.position) * cameraSpeed;
+            //transform./*position = Vector3.Lerp*/Translate((_target - transform.position) * cameraSpeed/*, Time.smoothDeltaTime * cameraSpeed*/);
         }
 
         else
