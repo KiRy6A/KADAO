@@ -32,43 +32,66 @@ public class Player : MonoBehaviour
 
     public Animator _animator;
 
+    public int timer=30000;
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _stats = FindAnyObjectByType<Stats>();
-    }
 
-    private void Update()
-    {
-        if (isRunning && _stamina > 0f)
+        if (!PlayerPrefs.HasKey("timer"))
         {
-			if (_stamina < 0.02f) _stamina = -3;
-            
-            _stamina -= Time.deltaTime * 1.7f;
-			_currentSpeed = _runSpeed;
+            PlayerPrefs.SetInt("timer", timer);
+            PlayerPrefs.Save();
         }
-        else 
+        else
         {
-            if (_stamina < _maxStamina)
+            if (SceneManager.GetActiveScene().name == "LevelScene" && PlayerPrefs.GetInt("floorcounter") == 1)
             {
-                _stamina += Time.deltaTime;
+                PlayerPrefs.SetInt("timer", 30000);
+                PlayerPrefs.Save();
             }
-
-			_currentSpeed = _defaultSpeed;
+            else if (SceneManager.GetActiveScene().name == "Betweenlevels")
+            {
+                PlayerPrefs.SetInt("timer", PlayerPrefs.GetInt("timer")+300);
+                PlayerPrefs.Save();
+            }
         }
-
-        _stats.UpdateStamina();
-
-		_x = Input.GetAxis("Horizontal");
-        _y = Input.GetAxis("Vertical");
-
-        _animator.SetFloat("x", _x + (_y*_y));
     }
+
+            private void Update()
+            {
+                if (isRunning && _stamina > 0f)
+                {
+                    if (_stamina < 0.02f) _stamina = -3;
+
+                    _stamina -= Time.deltaTime * 1.7f;
+                    _currentSpeed = _runSpeed;
+                }
+                else
+                {
+                    if (_stamina < _maxStamina)
+                    {
+                        _stamina += Time.deltaTime;
+                    }
+
+                    _currentSpeed = _defaultSpeed;
+                }
+
+                _stats.UpdateStamina();
+
+                _x = Input.GetAxis("Horizontal");
+                _y = Input.GetAxis("Vertical");
+
+                _animator.SetFloat("x", _x + (_y * _y));
+            }
 
     private void FixedUpdate()
     {
         _rb.linearVelocity = new Vector2(_x, _y).normalized * _currentSpeed;
+        if (SceneManager.GetActiveScene().name == "LevelScene" || SceneManager.GetActiveScene().name == "BossFight")
+            PlayerPrefs.SetInt("Timer", PlayerPrefs.GetInt("Timer") - 1);
     }
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -102,7 +125,7 @@ public class Player : MonoBehaviour
         _animator.SetTrigger("Dead");
         yield return new WaitForSeconds(1);
 
-		SceneManager.LoadScene("MainMenu");
+		SceneManager.LoadScene("LevelScene");
 	}
 
 	private IEnumerator TakeDamage()
