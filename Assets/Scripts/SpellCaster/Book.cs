@@ -1,6 +1,7 @@
 using SpellsSystem;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ public class Book : MonoBehaviour
 	{
 		_castControl = FindAnyObjectByType<CastControl>();
 		_player = FindAnyObjectByType<Player>().transform;
+
+		UpdateSheet();
 	}
 
 	private void Update()
@@ -109,5 +112,16 @@ public class Book : MonoBehaviour
 		_currentSpell = _allSpellCasters[_iCurrentSpell];
 
 		GetComponentInChildren<RawImage>().texture = _currentSpell._templateCast.texture;
+		TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
+		Debug.Log(text.name);
+		text.text = _currentSpell._name;
+		
+		text = text.GetComponentsInChildren<TextMeshProUGUI>()[1];
+		text.text = $"Мана: {_currentSpell._manaCost}";
+		Debug.Log(text.name);
+
+		text = text.GetComponentsInChildren<TextMeshProUGUI>()[1];
+		text.text = _currentSpell._description;
+		Debug.Log(text.name);
 	}
 }

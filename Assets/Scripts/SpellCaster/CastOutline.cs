@@ -15,7 +15,6 @@ public class CastOutline : MonoBehaviour
 		{
 			if(g.gameObject.activeInHierarchy) ++i;
 		}
-		Debug.Log(i);
 		_iPoints = i;
 	}
 

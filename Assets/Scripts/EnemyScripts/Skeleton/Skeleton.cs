@@ -26,9 +26,10 @@ public class Skeleton : Enemy
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.tag == "AttackSpell")
+		if (collision.tag == "AttackSpell" && !_isDamaged)
 		{
 			Stop();
+			StartCoroutine(Damaged());
 			TakeDamage(collision.GetComponent<IDamage>().Damage());
 			StartCoroutine(Stan(2f));
 		}

@@ -47,4 +47,9 @@ MonoBehaviour:
   _outlinePrefab: {fileID: 9019225745485253213, guid: 515d1aee9bf05f24483c7bd6d149d754, type: 3}
   _spellPrefab: {fileID: 2913117242048246704, guid: 751bef77abaf31447841de439286039e, type: 3}
   _templateCast: {fileID: -1603291472181913768, guid: d7931bf2a53b3244c9e12a8774100f0a, type: 3}
+  _name: Ice Spear
+  _manaCost: 5
+  _description: "\u0412\u044B\u0437\u044B\u0432\u0430\u0435\u0442 \u0441\u043E\u0441\u0443\u043B\u044C\u043A\u0443,
+    \u043F\u0440\u043E\u0431\u0438\u0432\u0430\u044E\u0448\u0443\u044E \u0432\u0440\u0430\u0433\u043E\u0432
+    \u043D\u0430\u0441\u043A\u0432\u043E\u0437\u044C"
   _speed: 750

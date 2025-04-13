@@ -17,10 +17,11 @@ public abstract class Enemy : MonoBehaviour
 	protected Animator _controller;
 	protected Rigidbody2D _rb;
 
-	protected bool _isAttacking = false;
-	protected bool _isStanned = false;
-	protected bool _isDead = false;
-	protected bool _isRunning = false;
+	[SerializeField] protected bool _isDamaged;
+	[SerializeField] protected bool _isAttacking = false;
+	[SerializeField] protected bool _isStanned = false;
+	[SerializeField] protected bool _isDead = false;
+	[SerializeField] protected bool _isRunning = false;
 
 	public void TakeDamage(int damage)
 	{
@@ -40,7 +41,6 @@ public abstract class Enemy : MonoBehaviour
 
 	protected void Stop()
 	{
-		StopAllCoroutines();
 		_controller.SetFloat("Velocity", 0);
 		_rb.linearVelocity = Vector2.zero;
 
@@ -91,6 +91,13 @@ public abstract class Enemy : MonoBehaviour
 
 		yield return new WaitForSeconds(time);
 		_isStanned = false;
+	}
+
+	protected IEnumerator Damaged()
+	{
+		_isDamaged = true;
+		yield return new WaitForSeconds(0.21f);
+		_isDamaged = false;
 	}
 
 	public IEnumerator Die()
