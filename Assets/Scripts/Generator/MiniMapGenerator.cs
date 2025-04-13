@@ -11,13 +11,10 @@ public class MiniMapGenerator : MonoBehaviour
         [SerializeField] List<Image> images = new List<Image>();
     public void GenerateMiniMap(int[,] map, bool[,] visited)
     {
-
-
-
         Image newimage;
         for (int i = 0; i < map.GetLength(0)-1; i++)
             for (int j = 0; j < map.GetLength(1)-1; j++)
-                if (visited[i,j])
+                if (visited[i, j])
             {
                 if (i == 0 || j == 0 || i == map.GetLength(0) - 2 || i == map.GetLength(1) - 2)
                     if (i == 0)
@@ -114,7 +111,7 @@ public class MiniMapGenerator : MonoBehaviour
                         }
                     }
                 }
-                Instantiate(newimage, new Vector3(panel.transform.position.x + i * 8 - 118, panel.transform.position.y + j * 8 - 118, 1f), Quaternion.identity, panel.transform);
+                    Instantiate(newimage, new Vector3(panel.transform.position.x +i*8-118, panel.transform.position.y+j * 8-118,1f), Quaternion.identity, panel.transform);
             }
     }
     }
