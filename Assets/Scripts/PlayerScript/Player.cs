@@ -63,8 +63,11 @@ public class Player : MonoBehaviour
 		_x = Input.GetAxis("Horizontal");
         _y = Input.GetAxis("Vertical");
 
-        _animator.SetFloat("x", _x + (_y*_y));
-    }
+		_animator.SetFloat("x", _rb.linearVelocityX * _rb.linearVelocityX + _rb.linearVelocityY * _rb.linearVelocityY);
+
+		if (_rb.linearVelocityX > 0.02f) Flip(false);
+		else if (_rb.linearVelocityX < -0.02f) Flip(true);
+	}
 
     private void FixedUpdate()
     {
@@ -90,8 +93,16 @@ public class Player : MonoBehaviour
 			_stats.UpdateHp();
 		}
 	}
+	protected void Flip(bool left)
+	{
+		if (left && transform.localScale.x > 0 ||
+			!left && transform.localScale.x < 0)
+		{
+			transform.localScale *= Vector2.left + Vector2.up;
+		}
+	}
 
-    private IEnumerator Die()
+	private IEnumerator Die()
     {
         if (PlayerPrefs.HasKey("floorcounter"))
         {
