@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using static UnityEditor.PlayerSettings;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
 
@@ -43,10 +44,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     [SerializeField] List<GameObject> floorstuff;
 
-
-    public bool[,] vizitedglobal;
-
-    short floorcounter;
+    [SerializeField] List<GameObject> monsters;
 
 
     System.Random random = new System.Random();
@@ -71,7 +69,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         }
         return false;
     }
-    public int[,] GenerateRooms(int downsize,int rightsize, short number)
+    public int[,] GenerateRooms(int downsize, int rightsize, short number)
     {
         int[,] matrix;
         int x = downsize + 1;
@@ -491,7 +489,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                         if (wall == 1)
                         {
                             if (i - 1 != 0)
-                                for(int c=j; c<j+right; c++)
+                                for (int c = j; c < j + right; c++)
                                     matrix[i - 1, c] = 2;
                             else
                                 for (int c = j; c < j + right; c++)
@@ -501,10 +499,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
                         {
                             if (j + right != y)
                                 for (int c = i; c < i + down; c++)
-                                    matrix[c, j+right] = 2;
+                                    matrix[c, j + right] = 2;
                             else
                                 for (int c = i; c < i + down; c++)
-                                    matrix[c, j-1] = 2;
+                                    matrix[c, j - 1] = 2;
                         }
                         else if (wall == 3)
                         {
@@ -559,7 +557,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
             }
         for (int i = 1; i < x - 2; i++)
             for (int j = 1; j < y - 2; j++)
-            { if (matrix[i, j] == 1 && matrix[i + 1, j] != 2 && matrix[i, j + 1] != 2 && matrix[i + 1, j + 1] != 2)
+            {
+                if (matrix[i, j] == 1 && matrix[i + 1, j] != 2 && matrix[i, j + 1] != 2 && matrix[i + 1, j + 1] != 2)
                 {
                     if (matrix[i - 1, j - 1] == 2 && matrix[i - 1, j] == 2 && matrix[i, j - 1] == 2)
                         matrix[i, j] = 2;
@@ -654,25 +653,25 @@ public class NewMonoBehaviourScript : MonoBehaviour
             if (!nextstep)
                 break;
         }
-            return new UnityEngine.Vector3[]
+        return new UnityEngine.Vector3[]
 
-        {
+    {
             new UnityEngine.Vector3(finishx, finishy, 1f),
             new UnityEngine.Vector3(startx, starty, 1f)
-        };
+    };
     }
 
     public int[,] MakePointBigger(int[,] matrix, Vector3 point1, int FinishOrStart)
     {
         Vector3 point = point1;
         int corners = 0;
-        if (matrix[(int)point.x-1, (int)point.y] != 2)
+        if (matrix[(int)point.x - 1, (int)point.y] != 2)
             corners++;
-        if (matrix[(int)point.x, (int)point.y-1] != 2)
+        if (matrix[(int)point.x, (int)point.y - 1] != 2)
             corners++;
-        if (matrix[(int)point.x+1, (int)point.y] != 2)
+        if (matrix[(int)point.x + 1, (int)point.y] != 2)
             corners++;
-        if (matrix[(int)point.x, (int)point.y+1] != 2)
+        if (matrix[(int)point.x, (int)point.y + 1] != 2)
             corners++;
 
         if (corners > 2)
@@ -684,42 +683,42 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 point.y = (int)point.y - 1;
             else if (matrix[(int)point.x + 1, (int)point.y] != 2)
                 point.x = (int)point.x + 1;
-            else 
+            else
                 point.y = (int)point.y + 1;
         }
         if (matrix[(int)point.x - 1, (int)point.y] == 2)
-                if (matrix[(int)point.x, (int)point.y - 1] == 2)
-                {
-                    matrix[(int)point.x, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x, (int)point.y - 1] = FinishOrStart;
-                    matrix[(int)point.x - 1, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x -1 , (int)point.y - 1 ] = FinishOrStart;
-                }
-                else
-                {
-                    matrix[(int)point.x, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x, (int)point.y + 1] = FinishOrStart;
-                    matrix[(int)point.x - 1, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x - 1, (int)point.y + 1] = FinishOrStart;
-                }
+            if (matrix[(int)point.x, (int)point.y - 1] == 2)
+            {
+                matrix[(int)point.x, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x, (int)point.y - 1] = FinishOrStart;
+                matrix[(int)point.x - 1, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x - 1, (int)point.y - 1] = FinishOrStart;
+            }
             else
             {
-                if (matrix[(int)point.x, (int)point.y - 1] == 2)
-                {
-                    matrix[(int)point.x, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x, (int)point.y - 1] = FinishOrStart;
-                    matrix[(int)point.x + 1, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x + 1, (int)point.y - 1] = FinishOrStart;
-                }
-                else
-                {
-                    matrix[(int)point.x, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x, (int)point.y + 1] = FinishOrStart;
-                    matrix[(int)point.x + 1, (int)point.y] = FinishOrStart;
-                    matrix[(int)point.x + 1, (int)point.y + 1] = FinishOrStart;
-                }
+                matrix[(int)point.x, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x, (int)point.y + 1] = FinishOrStart;
+                matrix[(int)point.x - 1, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x - 1, (int)point.y + 1] = FinishOrStart;
             }
-        if(corners>2)
+        else
+        {
+            if (matrix[(int)point.x, (int)point.y - 1] == 2)
+            {
+                matrix[(int)point.x, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x, (int)point.y - 1] = FinishOrStart;
+                matrix[(int)point.x + 1, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x + 1, (int)point.y - 1] = FinishOrStart;
+            }
+            else
+            {
+                matrix[(int)point.x, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x, (int)point.y + 1] = FinishOrStart;
+                matrix[(int)point.x + 1, (int)point.y] = FinishOrStart;
+                matrix[(int)point.x + 1, (int)point.y + 1] = FinishOrStart;
+            }
+        }
+        if (corners > 2)
             matrix[(int)point1.x, (int)point1.y] = 2;
         return matrix;
     }
@@ -778,7 +777,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                             roomCells.Add(Tuple.Create(nx, ny));
                             queue.Enqueue(Tuple.Create(nx, ny));
                         }
-                        else if (map[nx, ny] == 3 || map[nx, ny] == -1  || map[nx, ny] == -2)
+                        else if (map[nx, ny] == 3 || map[nx, ny] == -1 || map[nx, ny] == -2)
                         {
                             doors.Add(Tuple.Create(nx, ny));
                         }
@@ -969,16 +968,90 @@ public class NewMonoBehaviourScript : MonoBehaviour
             PlayerPrefs.SetInt("floorcounter", 1);
             PlayerPrefs.Save();
         }
-        floorcounter = (short)PlayerPrefs.GetInt("floorcounter");
+        short floorcounter = (short)PlayerPrefs.GetInt("floorcounter");
 
 
         int[,] map = GenerateRooms(sizer, sized, numbr);
         Vector3[] startandfinish = GenerateStartAndFinish(map, sized, sizer);
         map = MakePointBigger(map, startandfinish[0], -2);
         map = MakePointBigger(map, startandfinish[1], -1);
+        int[,] savezones = (int[,])map.Clone();
+        for (int i = 1; i < sized; i++)
+            for (int j = 1; j < sizer; j++)
+                if (savezones[i, j] != 1 && savezones[i, j] != 3)
+                {
+                    savezones[i, j] = 0;
+                    if ((savezones[i + 1, j] == 1 && savezones[i - 1, j] == 1) || (savezones[i, j + 1] == 1 && savezones[i, j + 1] == 1))
+                        savezones[i, j] = 1;
+                }
+                else if (savezones[i, j] == 3)
+                    savezones[i, j] = 1;
+        savezones[(int)startandfinish[0].x, (int)startandfinish[0].y] = 2;
+        savezones[(int)startandfinish[1].x, (int)startandfinish[1].y] = 2;
+        while (true)
+        {
+            bool nextstep = false;
+            for (int k = 1; k < sized; k++)
+            {
+                for (int l = 1; l < sizer; l++)
+                {
+                    if (savezones[k, l] == 2)
+                    {
+                        int[] dx = { -1, 1, 0, 0 };
+                        int[] dy = { 0, 0, -1, 1 };
+                        for (int d = 0; d < 4; d++)
+                            if (savezones[dx[d] + k, dy[d] + l] == 0)
+                            {
+                                savezones[dx[d] + k, dy[d] + l] = 2;
+                                nextstep = true;
+                            }
+                    }
+                }
+            }
+            if (!nextstep)
+                break;
+        }
+
+        Vector2 traider;
+
+        while (true)
+        {
+            traider = new Vector2(random.Next(1, sized - 1), random.Next(1, sizer - 1));
+            if (savezones[(int)traider.x, (int)traider.y] == 0 && map[(int)traider.x - 1, (int)traider.y] != 3 && map[(int)traider.x, (int)traider.y - 1] != 3 && map[(int)traider.x + 1, (int)traider.y] != 3 && map[(int)traider.x, (int)traider.y + 1] != 3
+                                                               && map[(int)traider.x - 1, (int)traider.y] != 1 && map[(int)traider.x, (int)traider.y - 1] != 1 && map[(int)traider.x + 1, (int)traider.y] != 1 && map[(int)traider.x, (int)traider.y + 1] != 1)
+            {
+                savezones[(int)traider.x, (int)traider.y] = 3;
+                break;
+            }
+
+        }
+
+        while (true)
+        {
+            bool nextstep = false;
+            for (int k = 1; k < sized -1; k++)
+            {
+                for (int l = 1; l < sizer - 1; l++)
+                {
+                    if (savezones[k, l] == 3)
+                    {
+                        int[] dx = { -1, 1, 0, 0 };
+                        int[] dy = { 0, 0, -1, 1 };
+                        for (int d = 0; d < 4; d++)
+                            if (savezones[dx[d] + k, dy[d] + l] == 0)
+                            {
+                                savezones[dx[d] + k, dy[d] + l] = 3;
+                                nextstep = true;
+                            }
+                    }
+                }
+            }
+            if (!nextstep)
+                break;
+        }
 
         int[,] mapwithitems = (int[,])map.Clone();
-        
+
         var processor = new RoomProcessor();
         processor.ConnectDoors(mapwithitems);
 
@@ -989,31 +1062,32 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     mapwithitems[i, j] = 1;
                 else
                     mapwithitems[i, j] = 0;
-        bool[,] visitedmap = new bool[sized,sizer];
+        bool[,] visitedmap = new bool[sized, sizer];
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
             {
                 visitedmap[i, j] = map[i, j] == -1;
-                if (visitedmap[i,j] && !playernum)
+                if (visitedmap[i, j] && !playernum)
                 {
                     Vector3 pos = new Vector3(i, j, 0.5f);
                     Player.transform.position = pos;
                     playernum = true;
-                }            
+                }
             }
         bool[,] alreadyvisitedmap = new bool[sized, sizer];
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
                 alreadyvisitedmap[i, j] = false;
 
-        FindRoom(visitedmap, map, alreadyvisitedmap,10000000,100);
+        FindRoom(visitedmap, map, alreadyvisitedmap, 10000000, 100, savezones, traider);
     }
-    public void FindRoom(bool[,] visitedmap, int[,] map, bool[,] alreadyvisitedmap,int x, int y)
+    public void FindRoom(bool[,] visitedmap, int[,] map, bool[,] alreadyvisitedmap, int x, int y, int[,] savezones, Vector2 traider)
     {
-        if(x!= 10000000)
-        visitedmap[x, y] = true;
+        if (x != 10000000)
+            visitedmap[x, y] = true;
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
+            {
                 if (visitedmap[i, j])
                 {
                     while (true)
@@ -1043,263 +1117,320 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     }
                     break;
                 }
+
+
+
+
+            }
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
-                if (visitedmap[i, j] && alreadyvisitedmap[i,j])
+                if (visitedmap[i, j] && alreadyvisitedmap[i, j])
                 {
                     visitedmap[i, j] = false;
                 }
-        else if (visitedmap[i, j] && !alreadyvisitedmap[i, j])
+                else if (visitedmap[i, j] && !alreadyvisitedmap[i, j])
                 {
                     alreadyvisitedmap[i, j] = true;
                 }
 
         MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map, visitedmap);
-        MapSaver.GetComponent<MapSaver>().Save(visitedmap, alreadyvisitedmap, map);
+        MapSaver.GetComponent<MapSaver>().Save(visitedmap, alreadyvisitedmap, map, savezones, traider);
 
-        SpawnRooms(map, visitedmap);
+        SpawnRooms(map, visitedmap, savezones, traider);
     }
-    private void SpawnRooms(int[,] map, bool [,] visitedmap)
+    private void SpawnRooms(int[,] map, bool[,] visitedmap, int[,] savezones, Vector2 traider)
     {
         bool visited = false;
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
                 if (visitedmap[i, j])
-            {
+                {
                     Vector3 pos = new Vector3(i, j, 1f);
-                visited = false;
-                if (j == 0)
-                {
-                    if (i == 0)
-                        Instantiate(cornerwalls[0], pos, UnityEngine.Quaternion.identity);
-                    else if (i == sized - 1)
-                        Instantiate(cornerwalls[1], pos, UnityEngine.Quaternion.identity);
-                    else
-                        Instantiate(downwalls[random.Next(0, downwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                }
-                else if (i == 0)
-                    Instantiate(leftwalls[random.Next(0, leftwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                else if (i == sized - 1)
-                    Instantiate(rightwalls[random.Next(0, rightwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                else if (j == sizer - 1)
-                    if (map[i, j - 1] == 1 || map[i, j - 1] == 3)
-                        Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                    else
-                        Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                else if (map[i, j] == 2 || map[i, j] < 0)
-                {
-                    if (map[i, j] == 2)
+                    int spawn =random.Next(0, 41);
+                    if (savezones[i, j] == 0 && spawn == 1)
                     {
-                        pos = new Vector3(i, j, 0.9f);
-                        int percent = random.Next(1, 21);
-                        if (percent == 1)
+                        int numsk = 0;
+                        int numsk1 = 0;
+                        int vamp = 0;
+                        if (PlayerPrefs.GetInt("floorcounter") == 1)
                         {
-                            int p = random.Next(-1, 1);
-                            if (p == 0)
-                                p = 1;
-                            GameObject k = Instantiate(floorstuff[random.Next(1, floorstuff.Count)], pos, UnityEngine.Quaternion.identity);
-                            k.transform.localScale = new Vector3(k.transform.localScale.x * p, k.transform.localScale.y, k.transform.localScale.z);
-                            visited = true;
+                            numsk = 1;
+                            numsk1 = 1;
                         }
-                        pos = new Vector3(i, j, 1f);
-                    }
-                    int[] dx = { -1, 1, 0, 0 };
-                    int[] dy = { 0, 0, -1, 1 };
-                    int counter = 0;
-                    for (int d = 0; d < 4; d++)
-                    {
-                        if (map[i + dx[d], j + dy[d]] == 1)
-                            counter++;
-                    }
-                    if (counter == 0)
-                        Instantiate(floor[random.Next(0, floor.Count)], pos, UnityEngine.Quaternion.identity);
-                    else if (counter == 1)
-                        if (map[i - 1, j] == 1)
+                        else if (PlayerPrefs.GetInt("floorcounter") == 2)
                         {
-                            Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
-                            if (j % 2 == 0 && map[i, j] == 2)
-                            {
-                                pos = new Vector3(i, j, 0.8f);
-                                Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
-                                pos = new Vector3(i, j, 1f);
-                            }
+                            numsk = 2;
+                            numsk1 = 1;
                         }
-                        else if (map[i, j - 1] == 1)
-                            Instantiate(downfloor[random.Next(0, downfloor.Count)], pos, UnityEngine.Quaternion.identity);
-                        else if (map[i + 1, j] == 1)
+                        else if (PlayerPrefs.GetInt("floorcounter") == 3)
                         {
-                            Instantiate(rightfloor, pos, UnityEngine.Quaternion.identity);
-                            if (j % 2 == 0 && map[i, j] == 2)
-                            {
-                                pos = new Vector3(i, j, 0.8f);
-                                GameObject k = Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
-                                k.transform.localScale = new Vector3(k.transform.localScale.x * -1, k.transform.localScale.y, k.transform.localScale.z);
-                                pos = new Vector3(i, j, 1f);
-                            }
+                            numsk = 2;
+                            numsk1 = 2;
+                            vamp = 1;
+                        }
+                        else if (PlayerPrefs.GetInt("floorcounter") == 4)
+                        {
+                            numsk = 3;
+                            numsk1 = 2;
+                            vamp = 1;
                         }
                         else
                         {
-                            Instantiate(upfloor[random.Next(0, upfloor.Count)], pos, UnityEngine.Quaternion.identity);
-                            if (i % 2 == 0)
-                            {
-                                pos = new Vector3(i, j + 1, 0.9f);
-                                int percent = random.Next(1, 11);
-                                if (percent == 1)
-                                    Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
-                                else
-                                    Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
-                            }
-                            else
-                            {
-                                pos = new Vector3(i, j + 1, 0.9f);
-                                int percent = random.Next(1, 6);
-                                if (percent == 1)
-                                    Instantiate(flag, pos, UnityEngine.Quaternion.identity);
-                            }
+                            numsk = 3;
+                            numsk1 = 3;
+                            vamp = 2;
                         }
-                    else if (counter == 2)
-                        if (map[i - 1, j] == 1 && map[i + 1, j] == 1)
-                            Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
-                        else if (map[i - 1, j] != 1 && map[i + 1, j] != 1)
-                            Instantiate(downfloor[random.Next(0, downfloor.Count)], pos, UnityEngine.Quaternion.identity);
-                        else if (map[i - 1, j] == 1)
-                            if (map[i, j - 1] == 1)
-                                Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
-                            else
-                            {
-                                Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
-                                if (i % 2 == 0)
-                                {
-                                    pos = new Vector3(i, j + 1, 0.9f);
-                                    int percent = random.Next(1, 11);
-                                    if (percent == 1)
-                                        Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
-                                    else
-                                        Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
-                                }
-                                else
-                                {
-                                    pos = new Vector3(i, j + 1, 0.9f);
-                                    int percent = random.Next(1, 6);
-                                    if (percent == 1)
-                                        Instantiate(flag, pos, UnityEngine.Quaternion.identity);
-                                }
-                                if (!visited)
-                                {
-                                    pos = new Vector3(i, j, 0.9f);
-                                    int percent = random.Next(0, 4);
-                                    if (percent == 1)
-                                    {
-                                        GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
-                                        k.transform.localScale = new Vector3(k.transform.localScale.x * (+1), k.transform.localScale.y, k.transform.localScale.z);
-                                    }
-                                    pos = new Vector3(i, j, 1f);
-                                }
-                            }
-                        else
+                        for (int k = 0; k < numsk; k++)
                         {
-                            if (map[i, j - 1] == 1)
-                                Instantiate(floorcorners[2], pos, UnityEngine.Quaternion.identity);
-                            else
-                            {
-                                Instantiate(floorcorners[1], pos, UnityEngine.Quaternion.identity);
-                                if (i % 2 == 0)
-                                {
-                                    pos = new Vector3(i, j + 1, 0.9f);
-                                    int percent = random.Next(1, 11);
-                                    if (percent == 1)
-                                        Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
-                                    else
-                                        Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
-                                }
-                                else
-                                {
-                                    pos = new Vector3(i, j + 1, 0.9f);
-                                    int percent = random.Next(1, 6);
-                                    if (percent == 1)
-                                        Instantiate(flag, pos, UnityEngine.Quaternion.identity);
-                                }
-                                if (!visited)
-                                {
-                                    pos = new Vector3(i, j, 0.9f);
-                                    int percent = random.Next(0, 4);
-                                    if (percent == 1)
-                                    {
-                                        GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
-                                        k.transform.localScale = new Vector3(k.transform.localScale.x * (-1), k.transform.localScale.y, k.transform.localScale.z);
-                                    }
-                                    pos = new Vector3(i, j, 1f);
-                                }
-                            }
+                            pos = new Vector3(i, j, 0.5f);
+                            Instantiate(monsters[0], pos, UnityEngine.Quaternion.identity);
                         }
-                    else
-                    {
-                        if (map[i - 1, j] != 1)
-                            Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
-                        else if (map[i, j - 1] != 1)
+                        for (int k = 0; k < numsk1; k++)
                         {
-                            Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
-                            if (i % 2 == 0)
-                            {
-                                pos = new Vector3(i, j + 1, 0.9f);
-                                int percent = random.Next(1, 6);
-                                if (percent == 1)
-                                    Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
-                                else
-                                    Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
-                            }
+                            pos = new Vector3(i, j, 0.5f);
+                            Instantiate(monsters[1], pos, UnityEngine.Quaternion.identity);
+                        }
+                        for (int k = 0; k < vamp; k++)
+                        {
+                            pos = new Vector3(i, j, 0.5f);
+                            Instantiate(monsters[2], pos, UnityEngine.Quaternion.identity);
+                        }
+                    }
+
+                        visited = false;
+                        if (j == 0)
+                        {
+                            if (i == 0)
+                                Instantiate(cornerwalls[0], pos, UnityEngine.Quaternion.identity);
+                            else if (i == sized - 1)
+                                Instantiate(cornerwalls[1], pos, UnityEngine.Quaternion.identity);
                             else
-                            {
-                                pos = new Vector3(i, j + 1, 0.9f);
-                                int percent = random.Next(1, 6);
-                                if (percent == 1)
-                                    Instantiate(flag, pos, UnityEngine.Quaternion.identity);
-                            }
-                            if (!visited)
+                                Instantiate(downwalls[random.Next(0, downwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                        }
+                        else if (i == 0)
+                            Instantiate(leftwalls[random.Next(0, leftwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                        else if (i == sized - 1)
+                            Instantiate(rightwalls[random.Next(0, rightwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                        else if (j == sizer - 1)
+                            if (map[i, j - 1] == 1 || map[i, j - 1] == 3)
+                                Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                            else
+                                Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                        else if (map[i, j] == 2 || map[i, j] < 0)
+                        {
+                            if (map[i, j] == 2)
                             {
                                 pos = new Vector3(i, j, 0.9f);
-                                int percent = random.Next(0, 4);
+                                int percent = random.Next(1, 21);
                                 if (percent == 1)
                                 {
-                                    GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
-                                    k.transform.localScale = new Vector3(k.transform.localScale.x * (+1), k.transform.localScale.y, k.transform.localScale.z);
+                                    int p = random.Next(-1, 1);
+                                    if (p == 0)
+                                        p = 1;
+                                    GameObject k = Instantiate(floorstuff[random.Next(1, floorstuff.Count)], pos, UnityEngine.Quaternion.identity);
+                                    k.transform.localScale = new Vector3(k.transform.localScale.x * p, k.transform.localScale.y, k.transform.localScale.z);
+                                    visited = true;
                                 }
                                 pos = new Vector3(i, j, 1f);
                             }
+                            int[] dx = { -1, 1, 0, 0 };
+                            int[] dy = { 0, 0, -1, 1 };
+                            int counter = 0;
+                            for (int d = 0; d < 4; d++)
+                            {
+                                if (map[i + dx[d], j + dy[d]] == 1)
+                                    counter++;
+                            }
+                            if (counter == 0)
+                                Instantiate(floor[random.Next(0, floor.Count)], pos, UnityEngine.Quaternion.identity);
+                            else if (counter == 1)
+                                if (map[i - 1, j] == 1)
+                                {
+                                    Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
+                                    if (j % 2 == 0 && map[i, j] == 2)
+                                    {
+                                        pos = new Vector3(i, j, 0.8f);
+                                        Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
+                                        pos = new Vector3(i, j, 1f);
+                                    }
+                                }
+                                else if (map[i, j - 1] == 1)
+                                    Instantiate(downfloor[random.Next(0, downfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                                else if (map[i + 1, j] == 1)
+                                {
+                                    Instantiate(rightfloor, pos, UnityEngine.Quaternion.identity);
+                                    if (j % 2 == 0 && map[i, j] == 2)
+                                    {
+                                        pos = new Vector3(i, j, 0.8f);
+                                        GameObject k = Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
+                                        k.transform.localScale = new Vector3(k.transform.localScale.x * -1, k.transform.localScale.y, k.transform.localScale.z);
+                                        pos = new Vector3(i, j, 1f);
+                                    }
+                                }
+                                else
+                                {
+                                    Instantiate(upfloor[random.Next(0, upfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                                    if (i % 2 == 0)
+                                    {
+                                        pos = new Vector3(i, j + 1, 0.9f);
+                                        int percent = random.Next(1, 11);
+                                        if (percent == 1)
+                                            Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                        else
+                                            Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                                    }
+                                    else
+                                    {
+                                        pos = new Vector3(i, j + 1, 0.9f);
+                                        int percent = random.Next(1, 6);
+                                        if (percent == 1)
+                                            Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                                    }
+                                }
+                            else if (counter == 2)
+                                if (map[i - 1, j] == 1 && map[i + 1, j] == 1)
+                                    Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
+                                else if (map[i - 1, j] != 1 && map[i + 1, j] != 1)
+                                    Instantiate(downfloor[random.Next(0, downfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                                else if (map[i - 1, j] == 1)
+                                    if (map[i, j - 1] == 1)
+                                        Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
+                                    else
+                                    {
+                                        Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
+                                        if (i % 2 == 0)
+                                        {
+                                            pos = new Vector3(i, j + 1, 0.9f);
+                                            int percent = random.Next(1, 11);
+                                            if (percent == 1)
+                                                Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                            else
+                                                Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                                        }
+                                        else
+                                        {
+                                            pos = new Vector3(i, j + 1, 0.9f);
+                                            int percent = random.Next(1, 6);
+                                            if (percent == 1)
+                                                Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                                        }
+                                        if (!visited)
+                                        {
+                                            pos = new Vector3(i, j, 0.9f);
+                                            int percent = random.Next(0, 4);
+                                            if (percent == 1)
+                                            {
+                                                GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
+                                                k.transform.localScale = new Vector3(k.transform.localScale.x * (+1), k.transform.localScale.y, k.transform.localScale.z);
+                                            }
+                                            pos = new Vector3(i, j, 1f);
+                                        }
+                                    }
+                                else
+                                {
+                                    if (map[i, j - 1] == 1)
+                                        Instantiate(floorcorners[2], pos, UnityEngine.Quaternion.identity);
+                                    else
+                                    {
+                                        Instantiate(floorcorners[1], pos, UnityEngine.Quaternion.identity);
+                                        if (i % 2 == 0)
+                                        {
+                                            pos = new Vector3(i, j + 1, 0.9f);
+                                            int percent = random.Next(1, 11);
+                                            if (percent == 1)
+                                                Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                            else
+                                                Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                                        }
+                                        else
+                                        {
+                                            pos = new Vector3(i, j + 1, 0.9f);
+                                            int percent = random.Next(1, 6);
+                                            if (percent == 1)
+                                                Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                                        }
+                                        if (!visited)
+                                        {
+                                            pos = new Vector3(i, j, 0.9f);
+                                            int percent = random.Next(0, 4);
+                                            if (percent == 1)
+                                            {
+                                                GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
+                                                k.transform.localScale = new Vector3(k.transform.localScale.x * (-1), k.transform.localScale.y, k.transform.localScale.z);
+                                            }
+                                            pos = new Vector3(i, j, 1f);
+                                        }
+                                    }
+                                }
+                            else
+                            {
+                                if (map[i - 1, j] != 1)
+                                    Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
+                                else if (map[i, j - 1] != 1)
+                                {
+                                    Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
+                                    if (i % 2 == 0)
+                                    {
+                                        pos = new Vector3(i, j + 1, 0.9f);
+                                        int percent = random.Next(1, 6);
+                                        if (percent == 1)
+                                            Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                        else
+                                            Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                                    }
+                                    else
+                                    {
+                                        pos = new Vector3(i, j + 1, 0.9f);
+                                        int percent = random.Next(1, 6);
+                                        if (percent == 1)
+                                            Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                                    }
+                                    if (!visited)
+                                    {
+                                        pos = new Vector3(i, j, 0.9f);
+                                        int percent = random.Next(0, 4);
+                                        if (percent == 1)
+                                        {
+                                            GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
+                                            k.transform.localScale = new Vector3(k.transform.localScale.x * (+1), k.transform.localScale.y, k.transform.localScale.z);
+                                        }
+                                        pos = new Vector3(i, j, 1f);
+                                    }
+                                }
+                                else if (map[i + 1, j] != 1)
+                                    Instantiate(floorcorners[4], pos, UnityEngine.Quaternion.identity);
+                                else
+                                    Instantiate(floorcorners[4], pos, UnityEngine.Quaternion.identity);
+                            }
+
+
                         }
-                        else if (map[i + 1, j] != 1)
-                            Instantiate(floorcorners[4], pos, UnityEngine.Quaternion.identity);
-                        else
-                            Instantiate(floorcorners[4], pos, UnityEngine.Quaternion.identity);
+                        else if (map[i, j] == 3)
+                        {
+                            if (map[i - 1, j] == 1)
+                            {
+                                Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
+                                pos = new Vector3(i, j, 0.9f);
+                                Instantiate(horizontaldoor, pos, UnityEngine.Quaternion.identity);
+                            }
+                            else
+                            {
+                                Instantiate(upfloor[random.Next(0, upfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                                pos = new Vector3(i, j, 0.9f);
+                                Instantiate(verticaldoor, pos, UnityEngine.Quaternion.identity);
+                            }
+
+
+                        }
+                        else if (map[i, j] == 1)
+                            if (map[i, j - 1] == 2 || map[i, j - 1] < 0)
+                                Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+                            else
+                                Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
+
                     }
-
-
                 }
-                else if (map[i, j] == 3)
-                {
-                    if (map[i - 1, j] == 1)
-                    {
-                        Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
-                        pos = new Vector3(i, j, 0.9f);
-                        Instantiate(horizontaldoor, pos, UnityEngine.Quaternion.identity);
-                    }
-                    else
-                    {
-                        Instantiate(upfloor[random.Next(0, upfloor.Count)], pos, UnityEngine.Quaternion.identity);
-                        pos = new Vector3(i, j, 0.9f);
-                        Instantiate(verticaldoor, pos, UnityEngine.Quaternion.identity);
-                    }
 
 
-                }
-                else if (map[i, j] == 1)
-                    if (map[i, j - 1] == 2 || map[i, j - 1] < 0)
-                        Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                    else
-                        Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
-
-            }
     }
-    
 
-}

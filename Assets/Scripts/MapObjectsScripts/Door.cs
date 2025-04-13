@@ -15,13 +15,13 @@ public class Door : MonoBehaviour
         {
             Oppenedfirsttime=true;
             if (MapSaver.alreadyvizited[(int)this.transform.position.x - 1, (int)this.transform.position.y] == false)
-                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x - 1, (int)this.transform.position.y);
+                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x - 1, (int)this.transform.position.y, MapSaver.savezone, MapSaver.traider1);
             else if (MapSaver.alreadyvizited[(int)this.transform.position.x + 1, (int)this.transform.position.y] == false)
-                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x + 1, (int)this.transform.position.y);
+                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x + 1, (int)this.transform.position.y, MapSaver.savezone, MapSaver.traider1);
             else if (MapSaver.alreadyvizited[(int)this.transform.position.x, (int)this.transform.position.y-1] == false)
-                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x, (int)this.transform.position.y-1);
+                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x, (int)this.transform.position.y-1, MapSaver.savezone, MapSaver.traider1);
             else
-                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x, (int)this.transform.position.y + 1);
+                generator.GetComponent<NewMonoBehaviourScript>().FindRoom(MapSaver.vizited, MapSaver.map, MapSaver.alreadyvizited, (int)this.transform.position.x, (int)this.transform.position.y + 1, MapSaver.savezone, MapSaver.traider1);
         }
     }
 
