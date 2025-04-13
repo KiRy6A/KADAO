@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6859633309528944598
+--- !u!1 &120432384030315726
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4647685601474944237}
-  - component: {fileID: 6512853054471835549}
+  - component: {fileID: 3125844786046067837}
+  - component: {fileID: 2366659460395684364}
   m_Layer: 0
-  m_Name: FireBallCaster
+  m_Name: PrayingCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4647685601474944237
+--- !u!4 &3125844786046067837
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6859633309528944598}
+  m_GameObject: {fileID: 120432384030315726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8260338, y: 1.8759567, z: -9.071048}
+  m_LocalPosition: {x: 2.7072988, y: 1.5469023, z: 0.42699495}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6512853054471835549
+--- !u!114 &2366659460395684364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6859633309528944598}
+  m_GameObject: {fileID: 120432384030315726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339065df9e6343a44849545b2684139b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a63ca6008199574d88c65c5add4f8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _outlinePrefab: {fileID: 9019225745485253213, guid: 515d1aee9bf05f24483c7bd6d149d754, type: 3}
-  _spellPrefab: {fileID: 6912393468815953102, guid: 7b33fab36996e7146aa9a9eab1b644a2, type: 3}
-  _templateCast: {fileID: 3763752930381237044, guid: b1666ce91c4e8014b8866e469574c2ab, type: 3}
-  _name: Fireball
-  _manaCost: 2
-  _description: "\u0412\u044B\u0437\u044B\u0432\u0430\u0435\u0442 \u043E\u0433\u043D\u0435\u043D\u043D\u044B\u0439
-    \u0448\u0430\u0440, \u0441\u0437\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0439\u0441\u044F
-    \u043F\u0440\u0438 \u0441\u0442\u043E\u043B\u043A\u043D\u043E\u0432\u0435\u043D\u0438\u0438"
-  _speed: 500
+  _spellPrefab: {fileID: 0}
+  _templateCast: {fileID: -7653882451023801575, guid: 07838cdd434318541b93d58269e3f88c, type: 3}
+  _name: Prayer
+  _manaCost: 0
+  _description: "\u0412\u044B \u043D\u0430\u0431\u0438\u0440\u0430\u0435\u0442\u0435\u0441\u044C
+    \u0434\u0443\u0445\u043E\u0432\u043D\u043E\u0439 \u0441\u0438\u043B\u044B \u0432\u043E\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u0442
+    \u043C\u0430\u043D\u0443"
