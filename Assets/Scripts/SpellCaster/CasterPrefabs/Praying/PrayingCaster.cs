@@ -13,6 +13,8 @@ public class PrayingCaster : AbstaractSpellCaster
 			player.Mana = player._maxMana;
 		}
 
+		player.GetComponent<Animator>().SetTrigger("re");
+
 		player._stats.UpdateMana();
 	}
 }
