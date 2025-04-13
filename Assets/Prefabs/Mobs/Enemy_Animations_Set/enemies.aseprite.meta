@@ -2,7 +2,87 @@ fileFormatVersion: 2
 guid: 010ec995a639c3c449a0e03889166644
 ScriptedImporter:
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton1_attack
+    second: {fileID: 7400000, guid: ac9c8b9e5a1679c41a16bb85e5427e49, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton1_death
+    second: {fileID: 7400000, guid: 0f6ee5ee2dd532942a1f032a4e1c9454, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton1_idle
+    second: {fileID: 7400000, guid: eb491efb47cb7874db0a17097836e91c, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton1_movement
+    second: {fileID: 7400000, guid: f116acdce8f7e804fab21eaad231ae51, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton1_take_damage
+    second: {fileID: 7400000, guid: 0c575faf680addc4ca865d4440b16713, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton2_attack
+    second: {fileID: 7400000, guid: 810416257569f0744b4cd7f12b2c07da, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton2_death
+    second: {fileID: 7400000, guid: 068189889dcf51e41ad7c13b141c1c3f, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton2_death2
+    second: {fileID: 7400000, guid: c3ad85c78c46a1d43ac5f675a56effaa, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton2_idle
+    second: {fileID: 7400000, guid: e9e5e28613680364baecdabfea175524, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton2_movemen
+    second: {fileID: 7400000, guid: bd9ec5eb5ed07b946bdba7e6afe558c5, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: skeleton2_take_damage
+    second: {fileID: 7400000, guid: 9b993775958b0044481b53f90f5983dc, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: vampire_attack
+    second: {fileID: 7400000, guid: dfd2ed3df64278f458720fa4e9e50dfd, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: vampire_death
+    second: {fileID: 7400000, guid: 7dc32b27ee7a5f04d88474eefb16821b, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: vampire_idle
+    second: {fileID: 7400000, guid: 30e176aaaad786342b845819d422d765, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: vampire_movement
+    second: {fileID: 7400000, guid: 4109e8ff4634b2b42ad8d9a365a10ac8, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: vampire_take_damage
+    second: {fileID: 7400000, guid: 95f61471e19dc2943a145eee3b912695, type: 2}
   serializedVersion: 2
   userData: 
   assetBundleName: 
@@ -98,7 +178,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 0
+  platformSettingsDirtyTick: 638801050117089408
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -4999,6 +5079,30 @@ ScriptedImporter:
     overridden: 0
     ignorePlatformSupport: 0
     maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0

@@ -7,7 +7,7 @@ public class Book : MonoBehaviour
 {
 	[SerializeField] public List<AbstaractSpellCaster> _allSpellCasters = new List<AbstaractSpellCaster>();
 
-	private Transform _castControl;
+	private CastControl _castControl;
 	private Transform _player;
 
 	private int _iCurrentSpell = 0;
@@ -22,16 +22,16 @@ public class Book : MonoBehaviour
 
 	private void Start()
 	{
-		_castControl = FindAnyObjectByType<CastControl>().transform;
+		_castControl = FindAnyObjectByType<CastControl>();
 		_player = FindAnyObjectByType<Player>().transform;
 	}
 
 	private void Update()
 	{
-		if(Input.GetMouseButtonDown(0) && _castingObj == null && !_isCasted && _castControl.GetComponent<CastControl>().isWriting)
+		if(Input.GetMouseButtonDown(0) && _castingObj == null && !_isCasted && _castControl.isWriting)
 		{
 			_currentSpell = _allSpellCasters[_iCurrentSpell];
-			_castingObj = _currentSpell.CastSpell(_castControl);
+			_castingObj = _currentSpell.CastSpell(_castControl.transform);
 			_castingCoroutine = StartCoroutine(Casting());
 		}
 
@@ -45,10 +45,10 @@ public class Book : MonoBehaviour
 	private IEnumerator Casting()
 	{
 		CastOutline castingOutline = _castingObj.GetComponent<CastOutline>();
-		yield return new WaitWhile(() => !castingOutline.IsCasted && !castingOutline.IsFailed && _castControl.GetComponent<CastControl>().isWriting);
+		yield return new WaitWhile(() => !castingOutline.IsCasted && !castingOutline.IsFailed && _castControl.isWriting);
 
 		_isWaitingUp = true;
-		yield return new WaitWhile(() => Input.GetMouseButtonUp(0) == false);
+		yield return new WaitWhile(() => Input.GetMouseButtonUp(0) == false && _castControl.isWriting);
 		
 		if(castingOutline.IsCasted && !castingOutline.IsFailed)
 		{
@@ -57,7 +57,7 @@ public class Book : MonoBehaviour
 			//DELETE!!!^^^^^^^^
 
 			_isCasted = true;
-			_castControl.GetComponent<CastControl>().enabled = false;
+			_castControl.enabled = false;
 			yield return new WaitWhile(() => Input.GetMouseButtonDown(0) != true);
 
 			//DELETE!!!
@@ -65,8 +65,7 @@ public class Book : MonoBehaviour
 			//DELETE!!!^^^^^^^
 
 			_currentSpell.ThrowSpell(_player.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-			_castControl.GetComponent<CastControl>().enabled = true;
-			StopCasting();
+			_castControl.enabled = true;
 		}
 
 		StopCasting();

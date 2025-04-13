@@ -17,17 +17,18 @@ public class FireBall : MonoBehaviour, IDamage
 	{
 		if (!_isExpleded && collision.tag != "Player")
 		{
+			_isExpleded = true;
 			StartCoroutine(Explode());
 		}
 	}
 
 	private IEnumerator Explode()
 	{
-		_rb.linearVelocity = Vector2.zero;
-		GetComponent<CircleCollider2D>().radius *= 4;
+			_rb.linearVelocity = Vector2.zero;
+			GetComponent<CircleCollider2D>().radius *= 4;
 
-		yield return new WaitForSeconds(0.2f);
-		Destroy(gameObject);
+			yield return new WaitForSeconds(0.2f);
+			Destroy(gameObject);
 	}
 
 	public int Damage()
