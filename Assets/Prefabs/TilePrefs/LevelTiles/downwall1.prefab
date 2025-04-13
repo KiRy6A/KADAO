@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5524209039650111167}
   - component: {fileID: 4359529414387675358}
   - component: {fileID: 3914942097837527369}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: downwall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

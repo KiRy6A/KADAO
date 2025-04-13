@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6129866033297649767}
   - component: {fileID: 6463263815590433596}
   - component: {fileID: -3931657690305232595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: verticalwall3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
