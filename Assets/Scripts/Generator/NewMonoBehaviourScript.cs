@@ -5,8 +5,11 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
+
+    [SerializeField] GameObject Player;
 
     [SerializeField] int sizer;
     [SerializeField] int sized;
@@ -40,7 +43,11 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     [SerializeField] List<GameObject> floorstuff;
 
+
+    public bool[,] vizitedglobal;
+
     short floorcounter;
+
 
     System.Random random = new System.Random();
     public static void RandomizeArray<T>(T[] array)
@@ -963,7 +970,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
             PlayerPrefs.Save();
         }
         floorcounter = (short)PlayerPrefs.GetInt("floorcounter");
-        Debug.Log(floorcounter);
+
+
         int[,] map = GenerateRooms(sizer, sized, numbr);
         Vector3[] startandfinish = GenerateStartAndFinish(map, sized, sizer);
         map = MakePointBigger(map, startandfinish[0], -2);
@@ -974,6 +982,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         var processor = new RoomProcessor();
         processor.ConnectDoors(mapwithitems);
 
+        bool playernum = false;
         for (int i = 0; i < sized + 1; i++)
             for (int j = 0; j < sizer + 1; j++)
                 if (mapwithitems[i, j] != 2)
@@ -982,33 +991,103 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     mapwithitems[i, j] = 0;
 
 
-        bool visited = false;
+        bool[,] visitedmap = new bool[sized,sizer];
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
             {
-                Vector3 pos = new Vector3(i,j, 1f);
+                visitedmap[i, j] = map[i, j] == -1;
+                if (visitedmap[i,j] && !playernum)
+                {
+                    Vector3 pos = new Vector3(i, j, 0.5f);
+                    Player.transform.position = pos;
+                    playernum = true;
+                }            
+            }
+        bool[,] alreadyvisitedmap = new bool[sized, sizer];
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                alreadyvisitedmap[i, j] = false;
+
+        FindRoom(visitedmap, map, alreadyvisitedmap);
+    }
+    public void FindRoom(bool[,] visitedmap, int[,] map, bool[,] alreadyvisitedmap)
+    {
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                if (visitedmap[i, j])
+                {
+                    while (true)
+                    {
+                        bool nextstep = false;
+                        for (int k = 0; k < sized; k++)
+                        {
+                            for (int l = 0; l < sizer; l++)
+                            {
+                                if (!visitedmap[k, l])
+                                {
+                                    int[] dx = { -1, 1, 0, 0, -1, 1, -1, 1 };
+                                    int[] dy = { 0, 0, -1, 1, 1, 1, -1, -1 };
+                                    for (int d = 0; d < 8; d++)
+                                        if (k + dx[d] >= 0 && k + dx[d] < sized && l + dy[d] >= 0 && l + dy[d] < sizer)
+                                            if (visitedmap[k + dx[d], l + dy[d]] && (map[k + dx[d], l + dy[d]] != 1 && map[k + dx[d], l + dy[d]] != 3))
+                                            {
+                                                nextstep = true;
+                                                visitedmap[k, l] = true;
+                                                break;
+                                            }
+                                }
+                            }
+                        }
+                        if (!nextstep)
+                            break;
+                    }
+                    break;
+                }
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                if (visitedmap[i, j] && alreadyvisitedmap[i,j])
+                {
+                    visitedmap[i, j] = false;
+                }
+        else if (visitedmap[i, j] && !alreadyvisitedmap[i, j])
+                {
+                    alreadyvisitedmap[i, j] = true;
+                }
+
+        MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map, visitedmap);
+
+        SpawnRooms(map, visitedmap);
+    }
+    private void SpawnRooms(int[,] map, bool [,] visitedmap)
+    {
+        bool visited = false;
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                if (visitedmap[i, j])
+            {
+                    Vector3 pos = new Vector3(i, j, 1f);
                 visited = false;
                 if (j == 0)
                 {
-                    if(i==0)
+                    if (i == 0)
                         Instantiate(cornerwalls[0], pos, UnityEngine.Quaternion.identity);
-                    else if(i==sized-1)
+                    else if (i == sized - 1)
                         Instantiate(cornerwalls[1], pos, UnityEngine.Quaternion.identity);
                     else
                         Instantiate(downwalls[random.Next(0, downwalls.Count)], pos, UnityEngine.Quaternion.identity);
                 }
-                else if(i==0)
+                else if (i == 0)
                     Instantiate(leftwalls[random.Next(0, leftwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                else if(i==sized-1)
+                else if (i == sized - 1)
                     Instantiate(rightwalls[random.Next(0, rightwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                else if(j==sizer-1)
-                    if (map[i,j-1]==1 || map[i, j - 1] == 3)
+                else if (j == sizer - 1)
+                    if (map[i, j - 1] == 1 || map[i, j - 1] == 3)
                         Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
                     else
                         Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
                 else if (map[i, j] == 2 || map[i, j] < 0)
                 {
-                    if (map[i,j]==2)
+                    if (map[i, j] == 2)
                     {
                         pos = new Vector3(i, j, 0.9f);
                         int percent = random.Next(1, 21);
@@ -1019,7 +1098,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                                 p = 1;
                             GameObject k = Instantiate(floorstuff[random.Next(1, floorstuff.Count)], pos, UnityEngine.Quaternion.identity);
                             k.transform.localScale = new Vector3(k.transform.localScale.x * p, k.transform.localScale.y, k.transform.localScale.z);
-                            visited =true;
+                            visited = true;
                         }
                         pos = new Vector3(i, j, 1f);
                     }
@@ -1037,7 +1116,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                         if (map[i - 1, j] == 1)
                         {
                             Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
-                            if (j % 2 == 0)
+                            if (j % 2 == 0 && map[i, j] == 2)
                             {
                                 pos = new Vector3(i, j, 0.8f);
                                 Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
@@ -1049,7 +1128,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                         else if (map[i + 1, j] == 1)
                         {
                             Instantiate(rightfloor, pos, UnityEngine.Quaternion.identity);
-                            if (j % 2 == 0)
+                            if (j % 2 == 0 && map[i, j] == 2)
                             {
                                 pos = new Vector3(i, j, 0.8f);
                                 GameObject k = Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
@@ -1212,17 +1291,14 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
 
                 }
-                else if(map[i, j]==1)
-                    if(map[i, j-1]==2 || map[i, j - 1] <0)
+                else if (map[i, j] == 1)
+                    if (map[i, j - 1] == 2 || map[i, j - 1] < 0)
                         Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
                     else
                         Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
 
             }
-
-
-
-        MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map);
     }
+    
 
 }

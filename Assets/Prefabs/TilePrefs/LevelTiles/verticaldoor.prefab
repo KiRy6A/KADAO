@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7983657409439082807}
   - component: {fileID: 1459010594443848894}
+  - component: {fileID: -6034567781265700796}
   m_Layer: 3
   m_Name: verticaldoor
   m_TagString: Untagged
@@ -87,3 +88,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6034567781265700796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7905059488887359855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04be2763bad1b1a4ebe914bcf4ca2d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generator: {fileID: 0}
+  player: {fileID: 2487374963329852389, guid: 9d64094375a1e0648b1d9f7a6090dc00, type: 3}
