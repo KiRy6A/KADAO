@@ -48,6 +48,10 @@ public class Book : MonoBehaviour
 			StopCasting();
 			StopCoroutine(_castingCoroutine);
 		}
+		if((Input.GetKeyDown(KeyCode.Tab)))
+		{
+			NextSpell();
+		}
 	}
 
 	private IEnumerator Casting()

@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float _currentSpeed = 10f;
     [SerializeField] private float _defaultSpeed = 10f;
-    [SerializeField] private float _runSpeed = 20f;
+    [SerializeField] private float _runSpeed = 15f;
 
 	private Rigidbody2D _rb;
 
@@ -107,11 +107,11 @@ public class Player : MonoBehaviour
 
             if (_hp <= 0)
             {
-                _hp = 0;
-                StartCoroutine(Die());
+                if(!(_runSpeed == 0))
+                    StartCoroutine(Die());
             }
             else
-            {
+            { 
                 StartCoroutine(TakeDamage());
 			}
 
@@ -128,9 +128,14 @@ public class Player : MonoBehaviour
         }
 
         _animator.SetTrigger("Dead");
-        yield return new WaitForSeconds(1);
-
-		SceneManager.LoadScene("LevelScene");
+        _runSpeed = 0;
+        _currentSpeed = 0f;
+        _defaultSpeed = 0f;
+        yield return new WaitForSeconds(3);
+        _runSpeed = 20f;
+        _currentSpeed = 10f;
+        _defaultSpeed = 10f;
+        SceneManager.LoadScene("LevelScene");
 	}
 
 	private IEnumerator TakeDamage()
