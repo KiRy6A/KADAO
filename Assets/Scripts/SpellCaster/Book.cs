@@ -113,15 +113,12 @@ public class Book : MonoBehaviour
 
 		GetComponentInChildren<RawImage>().texture = _currentSpell._templateCast.texture;
 		TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
-		Debug.Log(text.name);
 		text.text = _currentSpell._name;
 		
 		text = text.GetComponentsInChildren<TextMeshProUGUI>()[1];
 		text.text = $"Мана: {_currentSpell._manaCost}";
-		Debug.Log(text.name);
 
 		text = text.GetComponentsInChildren<TextMeshProUGUI>()[1];
 		text.text = _currentSpell._description;
-		Debug.Log(text.name);
 	}
 }
