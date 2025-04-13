@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4816519390133805151}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -67,7 +67,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: -21.02
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -152,10 +152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followMouse: 0
-  followTargets: 0
+  followTargets: 1
   targets:
-  - {fileID: 7863529253175016117, guid: b7894c700489f47479b71c154d113d0e, type: 3}
-  cameraRegion: {fileID: 1625278032236201349, guid: b7894c700489f47479b71c154d113d0e, type: 3}
+  - {fileID: 0}
+  cameraRegion: {fileID: 0}
   cameraOffset: {x: 0, y: 0, z: -10}
   cameraSpeed: 2.59
   resetMargin: 0
