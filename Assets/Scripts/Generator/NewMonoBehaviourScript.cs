@@ -34,7 +34,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] GameObject verticaldoor;
 
     [SerializeField] GameObject MapGenerator;
-
+    [SerializeField] GameObject MapSaver;
 
     [SerializeField] GameObject middletorch;
     [SerializeField] GameObject sidetorch;
@@ -989,8 +989,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     mapwithitems[i, j] = 1;
                 else
                     mapwithitems[i, j] = 0;
-
-
         bool[,] visitedmap = new bool[sized,sizer];
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
@@ -1008,10 +1006,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
             for (int j = 0; j < sizer; j++)
                 alreadyvisitedmap[i, j] = false;
 
-        FindRoom(visitedmap, map, alreadyvisitedmap);
+        FindRoom(visitedmap, map, alreadyvisitedmap,10000000,100);
     }
-    public void FindRoom(bool[,] visitedmap, int[,] map, bool[,] alreadyvisitedmap)
+    public void FindRoom(bool[,] visitedmap, int[,] map, bool[,] alreadyvisitedmap,int x, int y)
     {
+        if(x!= 10000000)
+        visitedmap[x, y] = true;
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
                 if (visitedmap[i, j])
@@ -1055,6 +1055,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 }
 
         MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map, visitedmap);
+        MapSaver.GetComponent<MapSaver>().Save(visitedmap, alreadyvisitedmap, map);
 
         SpawnRooms(map, visitedmap);
     }

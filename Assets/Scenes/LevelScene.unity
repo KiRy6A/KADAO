@@ -588,6 +588,51 @@ RectTransform:
   m_AnchoredPosition: {x: -140, y: -140}
   m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1433295464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1433295466}
+  - component: {fileID: 1433295465}
+  m_Layer: 0
+  m_Name: MapSaver
+  m_TagString: MapSaver
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1433295465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433295464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04fa81216403c3a4694a18eb4ba977f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generator: {fileID: 1492659744}
+--- !u!4 &1433295466
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433295464}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.400101, y: 5.7972484, z: 569.9257}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1492659744
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,6 +715,7 @@ MonoBehaviour:
   horizontaldoor: {fileID: 2548959599507642239, guid: d5933183896979848824dc7b7c0b288d, type: 3}
   verticaldoor: {fileID: 7905059488887359855, guid: 7203065b5df57594ea230e667d80b86b, type: 3}
   MapGenerator: {fileID: 862753521}
+  MapSaver: {fileID: 1433295464}
   middletorch: {fileID: 2789542556829039854, guid: 0f68b1108ba94784cbe416721b0dbf7e, type: 3}
   sidetorch: {fileID: 5776511494831711798, guid: 303d9a8ba5824f94a8b755288993e25e, type: 3}
   torchwithoutfire: {fileID: 4787781510016267886, guid: 1a2d491c97c69614893c17acf43982d5, type: 3}
@@ -958,3 +1004,4 @@ SceneRoots:
   - {fileID: 862753523}
   - {fileID: 674177016}
   - {fileID: 7770092777371442087}
+  - {fileID: 1433295466}
