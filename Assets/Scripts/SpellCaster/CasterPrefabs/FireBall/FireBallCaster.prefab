@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _outlinePrefab: {fileID: 9019225745485253213, guid: 515d1aee9bf05f24483c7bd6d149d754, type: 3}
   _spellPrefab: {fileID: 6912393468815953102, guid: 7b33fab36996e7146aa9a9eab1b644a2, type: 3}
-  _templateCast: {fileID: 3763752930381237044, guid: b1666ce91c4e8014b8866e469574c2ab, type: 3}
+  _templateCast: {fileID: 1008945994034440308, guid: e829d75980f210c449293a1c56e16523, type: 3}
   _name: Fireball
   _manaCost: 2
   _description: "\u0412\u044B\u0437\u044B\u0432\u0430\u0435\u0442 \u043E\u0433\u043D\u0435\u043D\u043D\u044B\u0439
-    \u0448\u0430\u0440, \u0441\u0437\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0439\u0441\u044F
+    \u0448\u0430\u0440, \u0432\u0437\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0439\u0441\u044F
     \u043F\u0440\u0438 \u0441\u0442\u043E\u043B\u043A\u043D\u043E\u0432\u0435\u043D\u0438\u0438"
   _speed: 500

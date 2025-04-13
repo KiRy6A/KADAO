@@ -484,21 +484,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7863529253175016117, guid: b7894c700489f47479b71c154d113d0e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6
+    - target: {fileID: 1174741558933249960, guid: b7894c700489f47479b71c154d113d0e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2746983449213489034, guid: bb4232d12571edf46993068fe740421e, type: 3}
+    - target: {fileID: 1625278032236201349, guid: b7894c700489f47479b71c154d113d0e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.9375
       objectReference: {fileID: 0}
-    - target: {fileID: 7863529253175016117, guid: b7894c700489f47479b71c154d113d0e, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6
+    - target: {fileID: 1625278032236201349, guid: b7894c700489f47479b71c154d113d0e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.375
       objectReference: {fileID: 0}
     - target: {fileID: 7863529253175016117, guid: b7894c700489f47479b71c154d113d0e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 7863529253175016117, guid: b7894c700489f47479b71c154d113d0e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.07
+      value: -0.049
       objectReference: {fileID: 0}
     - target: {fileID: 7863529253175016117, guid: b7894c700489f47479b71c154d113d0e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1126,18 +1130,34 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1484805584932135488, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 1484805584932135488, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.88
+      objectReference: {fileID: 0}
     - target: {fileID: 1906532233502204744, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
       propertyPath: m_SortingOrder
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 1906532233502204744, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 2306553854493435440, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -41.750015
+      value: -41.75001
       objectReference: {fileID: 0}
     - target: {fileID: 2963188014941360461, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3661424482057400186, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e829d75980f210c449293a1c56e16523, type: 3}
     - target: {fileID: 6942832581613383802, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
@@ -1233,6 +1253,10 @@ PrefabInstance:
     - target: {fileID: 6948813010302298355, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288847960655103730, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -97.33334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
