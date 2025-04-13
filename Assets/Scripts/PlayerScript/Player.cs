@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
             }
             else if (SceneManager.GetActiveScene().name == "Betweenlevels")
             {
-                PlayerPrefs.SetInt("timer", PlayerPrefs.GetInt("timer")+300);
+                PlayerPrefs.SetInt("timer", PlayerPrefs.GetInt("timer")+3000);
                 PlayerPrefs.Save();
             }
         }
@@ -91,7 +91,12 @@ public class Player : MonoBehaviour
     {
         _rb.linearVelocity = new Vector2(_x, _y).normalized * _currentSpeed;
         if (SceneManager.GetActiveScene().name == "LevelScene" || SceneManager.GetActiveScene().name == "BossFight")
-            PlayerPrefs.SetInt("Timer", PlayerPrefs.GetInt("Timer") - 1);
+        {
+            PlayerPrefs.SetInt("timer", PlayerPrefs.GetInt("timer") - 1);
+            PlayerPrefs.Save();
+            if (PlayerPrefs.GetInt("timer") <= 0)
+                Die();
+        }
     }
 
 	private void OnTriggerEnter2D(Collider2D collision)

@@ -15,6 +15,8 @@ public class MenuControls : MonoBehaviour
             PlayerPrefs.SetInt("floorcounter", 1);
             PlayerPrefs.Save();
         }
+        PlayerPrefs.SetInt("floorcounter", 1);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("LevelScene");
     }
     public void ExitPressed()

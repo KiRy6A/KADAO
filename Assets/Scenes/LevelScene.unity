@@ -789,6 +789,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 386311458}
+    - target: {fileID: 2306553854493435440, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -41.750008
+      objectReference: {fileID: 0}
     - target: {fileID: 2963188014941360461, guid: 1bcd8904f8f877044b5e333accd61ed6, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -969,6 +973,14 @@ PrefabInstance:
     - target: {fileID: 8481654595948450740, guid: b2efdc7e14cfb1148a378b3560611cc5, type: 3}
       propertyPath: m_Name
       value: CanvasTimerMinimap
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836530293892372191, guid: b2efdc7e14cfb1148a378b3560611cc5, type: 3}
+      propertyPath: m_margin.y
+      value: -64.57153
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836530293892372191, guid: b2efdc7e14cfb1148a378b3560611cc5, type: 3}
+      propertyPath: m_margin.z
+      value: -305.31134
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
