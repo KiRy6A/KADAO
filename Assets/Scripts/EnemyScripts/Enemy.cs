@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IDamage
 {
 	[SerializeField] protected int _hp;
 	[SerializeField] protected float _speed;
@@ -107,7 +107,12 @@ public abstract class Enemy : MonoBehaviour
 			col.enabled = false;
 		}
 
-		yield return new WaitForSeconds(5.0f);
+		yield return new WaitForSeconds(4.0f);
 		Destroy(gameObject);
+	}
+
+	int IDamage.Damage()
+	{
+		return _damage;
 	}
 }
