@@ -35,8 +35,12 @@ public class Book : MonoBehaviour
 		if(Input.GetMouseButtonDown(0) && _castingObj == null && !_isCasted && _castControl.isWriting)
 		{
 			_currentSpell = _allSpellCasters[_iCurrentSpell];
-			_castingObj = _currentSpell.CastSpell(_castControl.transform);
-			_castingCoroutine = StartCoroutine(Casting());
+			if (_currentSpell._manaCost <= _player.GetComponent<Player>().Mana)
+			{
+				_castingObj = _currentSpell.CastSpell(_castControl.transform);
+				_castingCoroutine = StartCoroutine(Casting());
+			}
+			else { }
 		}
 
 		if(Input.GetMouseButtonUp(0) && _castingObj != null && !_isCasted && !_isWaitingUp)
@@ -56,6 +60,9 @@ public class Book : MonoBehaviour
 		
 		if(castingOutline.IsCasted && !castingOutline.IsFailed)
 		{
+			_player.GetComponent<Player>().Mana -= _currentSpell._manaCost;
+			_player.GetComponent<Player>()._stats.UpdateMana();
+
 			//DELETE!!!
 			FindAnyObjectByType<Player>().GetComponent<SpriteRenderer>().color = Color.red;
 			//DELETE!!!^^^^^^^^

@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] private int _maxHp = 5;
-	[SerializeField] private int _maxMana = 8;
-	[SerializeField] private int _maxStamina = 5;
+	[SerializeField] public int _maxHp = 5;
+	[SerializeField] public int _maxMana = 8;
+	[SerializeField] public int _maxStamina = 5;
 
 	[SerializeField] private int _hp = 5;
     [SerializeField] private int _mana = 8;
@@ -19,7 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _runSpeed = 20f;
 
 	private Rigidbody2D _rb;
-    private Stats _stats;
+
+    public Stats _stats;
 
 	private bool _isDamaged = false;
 

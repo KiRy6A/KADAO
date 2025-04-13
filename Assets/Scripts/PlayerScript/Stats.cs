@@ -17,10 +17,6 @@ public class Stats : MonoBehaviour
 	private List<GameObject> _manaList;
 	private List<GameObject> _staminaList;
 
-	private int _hp = 0;
-	private int _mana = 0;
-	private int _stamina = 0;
-
 	private Player _player;
 
 	private void Start()
@@ -34,104 +30,60 @@ public class Stats : MonoBehaviour
 		for (int i = 0; i < _player.Hp; i++) 
 		{
 			_hpList.Add(Instantiate(_hpPrefab, _hpSlot));
-			++_hp;
 		}
 
 		for (int i = 0; i < _player.Mana; i++) 
 		{
 			_manaList.Add(Instantiate(_manaPrefab, _manaSlot)); 
-			++_mana; 
 		}
 
 		for (int i = 0; i < _player.Stamina; i++) 
 		{
 			_staminaList.Add(Instantiate(_staminaPrefab, _staminaSlot));
-			++_stamina; 
 		}
 	}
 
 	public void UpdateHp()
 	{
-		if (_player.Hp >= 0)
+		for (int i = 0; i < _hpList.Count; i++)
 		{
-			if (_hp < _player.Hp)
+			if (i < _player.Hp)
 			{
-				if (_hp == 0)
-				{
-					_hp = 1; 
-					_hpList[0].GetComponent<Image>().enabled = true;
-				}
-
-				for (int i = _hp - 1; i < _player.Hp; i++)
-				{
-					_hpList[i].GetComponent<Image>().enabled = true;
-					++_hp;
-				}
+				_hpList[i].GetComponent<Image>().enabled = true;
 			}
-			else if (_hp > _player.Hp)
+			else
 			{
-				for (int i = _hp - 1; i >= _player.Hp; i--)
-				{
-					_hpList[i].GetComponent<Image>().enabled = false;
-					--_hp;
-				}
+				_hpList[i].GetComponent<Image>().enabled = false;
 			}
 		}
 	}
 
 	public void UpdateMana()
 	{
-		if (_mana < _player.Mana)
+		for (int i = 0; i < _manaList.Count; i++)
 		{
-			if (_mana == 0)
-			{
-				_mana = 1;
-				_manaList[0].GetComponent<Image>().enabled = true;
-			}
-
-			for (int i = _mana - 1; i < _player.Mana; i++)
+			if (i < _player.Mana)
 			{
 				_manaList[i].GetComponent<Image>().enabled = true;
-				++_mana;
 			}
-		}
-		else if (_mana > _player.Mana)
-		{
-			for (int i = _mana - 1; i >= _player.Mana; i--)
+			else
 			{
 				_manaList[i].GetComponent<Image>().enabled = false;
-				--_mana;
 			}
 		}
 	}
 	
 	public void UpdateStamina()
 	{
-		if (_player.Stamina >= 0)
+		for(int i = 0; i < _staminaList.Count; i++)
 		{
-			if (_stamina < _player.Stamina)
+			if (i < _player.Stamina)
 			{
-				if(_stamina == 0)
-				{ 
-					_stamina = 1;
-					_staminaList[0].GetComponent<Image>().enabled = true;
-				}
-
-				for (int i = _stamina - 1; i < _player.Stamina; i++)
-				{
-					_staminaList[i].GetComponent<Image>().enabled = true;
-					++_stamina;
-				}
+				_staminaList[i].GetComponent<Image>().enabled = true;
 			}
-			else if (_stamina > _player.Stamina)
+			else
 			{
-				for (int i = _stamina - 1; i >= _player.Stamina; i--)
-				{
-					if (i >= _staminaList.Count) break;
-					Debug.Log(i);
-					_staminaList[i].GetComponent<Image>().enabled = false;
-					--_stamina;
-				}
+				_staminaList[i].GetComponent<Image>().enabled = false;
 			}
 		}
 	}
