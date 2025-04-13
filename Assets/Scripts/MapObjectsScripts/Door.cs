@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
     [SerializeField] Sprite Closedsp;
     bool Oppenedfirsttime = false;
     GameObject generator;
-
+    float radius = 1.5f;
 
 
     private void Start()
@@ -20,7 +20,7 @@ public class Door : MonoBehaviour
         generator = GameObject.FindGameObjectWithTag("Generator");
 
         if (Input.GetKeyDown(KeyCode.E))
-            if (this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x < 2 && this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x > -2 && this.transform.position.y - GameObject.FindGameObjectWithTag("Player").transform.position.y < 2 && this.transform.position.y - GameObject.FindGameObjectWithTag("Player").transform.position.y > -2)
+            if (this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x < radius && this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x > -radius && this.transform.position.y - GameObject.FindGameObjectWithTag("Player").transform.position.y < radius && this.transform.position.y - GameObject.FindGameObjectWithTag("Player").transform.position.y > -radius)
             {
                 if (!Oppened)
                 {

@@ -42,6 +42,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] GameObject torchwithoutfire;
     [SerializeField] GameObject flag;
 
+    [SerializeField] GameObject EndOfLevel;
+
     [SerializeField] List<GameObject> floorstuff;
 
     [SerializeField] List<GameObject> monsters;
@@ -1218,7 +1220,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
                                 Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
                         else if (map[i, j] == 2 || map[i, j] < 0)
                         {
-                            if (map[i, j] == 2)
+                        if (map[i, j] == -2 && map[i, j - 1] == -2 && map[i + 1, j] == -2)
+                        {
+                            pos = new Vector3(i + 0.5f, j - 0.5f, 0.9f);
+                            Instantiate(EndOfLevel, pos, UnityEngine.Quaternion.identity);
+                            pos = new Vector3(i, j, 1f);
+                        }
+                        if (map[i, j] == 2)
                             {
                                 pos = new Vector3(i, j, 0.9f);
                                 int percent = random.Next(1, 21);
