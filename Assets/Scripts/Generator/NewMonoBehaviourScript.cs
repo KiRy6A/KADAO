@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    [SerializeField] GameObject tile;
-    [SerializeField] GameObject itemtile;
-    [SerializeField] GameObject starttile;
-    [SerializeField] GameObject finishtile;
+
+    [SerializeField] GameObject Player;
+
     [SerializeField] int sizer;
     [SerializeField] int sized;
     [SerializeField] short numbr;
@@ -34,7 +35,19 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     [SerializeField] GameObject MapGenerator;
 
+
+    [SerializeField] GameObject middletorch;
+    [SerializeField] GameObject sidetorch;
+    [SerializeField] GameObject torchwithoutfire;
+    [SerializeField] GameObject flag;
+
+    [SerializeField] List<GameObject> floorstuff;
+
+
+    public bool[,] vizitedglobal;
+
     short floorcounter;
+
 
     System.Random random = new System.Random();
     public static void RandomizeArray<T>(T[] array)
@@ -953,14 +966,11 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("floorcounter"))
         {
-            PlayerPrefs.SetInt("floorcounter", 0);
+            PlayerPrefs.SetInt("floorcounter", 1);
             PlayerPrefs.Save();
         }
-        PlayerPrefs.SetInt("floorcounter", PlayerPrefs.GetInt("floorcounter")+1);
-        PlayerPrefs.Save();
         floorcounter = (short)PlayerPrefs.GetInt("floorcounter");
 
-        Debug.Log(floorcounter);
 
         int[,] map = GenerateRooms(sizer, sized, numbr);
         Vector3[] startandfinish = GenerateStartAndFinish(map, sized, sizer);
@@ -972,6 +982,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         var processor = new RoomProcessor();
         processor.ConnectDoors(mapwithitems);
 
+        bool playernum = false;
         for (int i = 0; i < sized + 1; i++)
             for (int j = 0; j < sizer + 1; j++)
                 if (mapwithitems[i, j] != 2)
@@ -980,32 +991,117 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     mapwithitems[i, j] = 0;
 
 
-
+        bool[,] visitedmap = new bool[sized,sizer];
         for (int i = 0; i < sized; i++)
             for (int j = 0; j < sizer; j++)
             {
-                Vector3 pos = new Vector3(i,j, 1f);
+                visitedmap[i, j] = map[i, j] == -1;
+                if (visitedmap[i,j] && !playernum)
+                {
+                    Vector3 pos = new Vector3(i, j, 0.5f);
+                    Player.transform.position = pos;
+                    playernum = true;
+                }            
+            }
+        bool[,] alreadyvisitedmap = new bool[sized, sizer];
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                alreadyvisitedmap[i, j] = false;
 
+        FindRoom(visitedmap, map, alreadyvisitedmap);
+    }
+    public void FindRoom(bool[,] visitedmap, int[,] map, bool[,] alreadyvisitedmap)
+    {
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                if (visitedmap[i, j])
+                {
+                    while (true)
+                    {
+                        bool nextstep = false;
+                        for (int k = 0; k < sized; k++)
+                        {
+                            for (int l = 0; l < sizer; l++)
+                            {
+                                if (!visitedmap[k, l])
+                                {
+                                    int[] dx = { -1, 1, 0, 0, -1, 1, -1, 1 };
+                                    int[] dy = { 0, 0, -1, 1, 1, 1, -1, -1 };
+                                    for (int d = 0; d < 8; d++)
+                                        if (k + dx[d] >= 0 && k + dx[d] < sized && l + dy[d] >= 0 && l + dy[d] < sizer)
+                                            if (visitedmap[k + dx[d], l + dy[d]] && (map[k + dx[d], l + dy[d]] != 1 && map[k + dx[d], l + dy[d]] != 3))
+                                            {
+                                                nextstep = true;
+                                                visitedmap[k, l] = true;
+                                                break;
+                                            }
+                                }
+                            }
+                        }
+                        if (!nextstep)
+                            break;
+                    }
+                    break;
+                }
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                if (visitedmap[i, j] && alreadyvisitedmap[i,j])
+                {
+                    visitedmap[i, j] = false;
+                }
+        else if (visitedmap[i, j] && !alreadyvisitedmap[i, j])
+                {
+                    alreadyvisitedmap[i, j] = true;
+                }
+
+        MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map, visitedmap);
+
+        SpawnRooms(map, visitedmap);
+    }
+    private void SpawnRooms(int[,] map, bool [,] visitedmap)
+    {
+        bool visited = false;
+        for (int i = 0; i < sized; i++)
+            for (int j = 0; j < sizer; j++)
+                if (visitedmap[i, j])
+            {
+                    Vector3 pos = new Vector3(i, j, 1f);
+                visited = false;
                 if (j == 0)
                 {
-                    if(i==0)
+                    if (i == 0)
                         Instantiate(cornerwalls[0], pos, UnityEngine.Quaternion.identity);
-                    else if(i==sized-1)
+                    else if (i == sized - 1)
                         Instantiate(cornerwalls[1], pos, UnityEngine.Quaternion.identity);
                     else
                         Instantiate(downwalls[random.Next(0, downwalls.Count)], pos, UnityEngine.Quaternion.identity);
                 }
-                else if(i==0)
+                else if (i == 0)
                     Instantiate(leftwalls[random.Next(0, leftwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                else if(i==sized-1)
+                else if (i == sized - 1)
                     Instantiate(rightwalls[random.Next(0, rightwalls.Count)], pos, UnityEngine.Quaternion.identity);
-                else if(j==sizer-1)
-                    if (map[i,j-1]==1 || map[i, j - 1] == 3)
+                else if (j == sizer - 1)
+                    if (map[i, j - 1] == 1 || map[i, j - 1] == 3)
                         Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
                     else
                         Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
                 else if (map[i, j] == 2 || map[i, j] < 0)
                 {
+                    if (map[i, j] == 2)
+                    {
+                        pos = new Vector3(i, j, 0.9f);
+                        int percent = random.Next(1, 21);
+                        if (percent == 1)
+                        {
+                            int p = random.Next(-1, 1);
+                            if (p == 0)
+                                p = 1;
+                            GameObject k = Instantiate(floorstuff[random.Next(1, floorstuff.Count)], pos, UnityEngine.Quaternion.identity);
+                            k.transform.localScale = new Vector3(k.transform.localScale.x * p, k.transform.localScale.y, k.transform.localScale.z);
+                            visited = true;
+                        }
+                        pos = new Vector3(i, j, 1f);
+                    }
                     int[] dx = { -1, 1, 0, 0 };
                     int[] dy = { 0, 0, -1, 1 };
                     int counter = 0;
@@ -1016,15 +1112,50 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     }
                     if (counter == 0)
                         Instantiate(floor[random.Next(0, floor.Count)], pos, UnityEngine.Quaternion.identity);
-                    else if(counter ==1)
+                    else if (counter == 1)
                         if (map[i - 1, j] == 1)
+                        {
                             Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
+                            if (j % 2 == 0 && map[i, j] == 2)
+                            {
+                                pos = new Vector3(i, j, 0.8f);
+                                Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
+                                pos = new Vector3(i, j, 1f);
+                            }
+                        }
                         else if (map[i, j - 1] == 1)
                             Instantiate(downfloor[random.Next(0, downfloor.Count)], pos, UnityEngine.Quaternion.identity);
                         else if (map[i + 1, j] == 1)
+                        {
                             Instantiate(rightfloor, pos, UnityEngine.Quaternion.identity);
+                            if (j % 2 == 0 && map[i, j] == 2)
+                            {
+                                pos = new Vector3(i, j, 0.8f);
+                                GameObject k = Instantiate(sidetorch, pos, UnityEngine.Quaternion.identity);
+                                k.transform.localScale = new Vector3(k.transform.localScale.x * -1, k.transform.localScale.y, k.transform.localScale.z);
+                                pos = new Vector3(i, j, 1f);
+                            }
+                        }
                         else
+                        {
                             Instantiate(upfloor[random.Next(0, upfloor.Count)], pos, UnityEngine.Quaternion.identity);
+                            if (i % 2 == 0)
+                            {
+                                pos = new Vector3(i, j + 1, 0.9f);
+                                int percent = random.Next(1, 11);
+                                if (percent == 1)
+                                    Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                else
+                                    Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                            }
+                            else
+                            {
+                                pos = new Vector3(i, j + 1, 0.9f);
+                                int percent = random.Next(1, 6);
+                                if (percent == 1)
+                                    Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                            }
+                        }
                     else if (counter == 2)
                         if (map[i - 1, j] == 1 && map[i + 1, j] == 1)
                             Instantiate(leftfloor, pos, UnityEngine.Quaternion.identity);
@@ -1034,20 +1165,107 @@ public class NewMonoBehaviourScript : MonoBehaviour
                             if (map[i, j - 1] == 1)
                                 Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
                             else
+                            {
                                 Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
+                                if (i % 2 == 0)
+                                {
+                                    pos = new Vector3(i, j + 1, 0.9f);
+                                    int percent = random.Next(1, 11);
+                                    if (percent == 1)
+                                        Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                    else
+                                        Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                                }
+                                else
+                                {
+                                    pos = new Vector3(i, j + 1, 0.9f);
+                                    int percent = random.Next(1, 6);
+                                    if (percent == 1)
+                                        Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                                }
+                                if (!visited)
+                                {
+                                    pos = new Vector3(i, j, 0.9f);
+                                    int percent = random.Next(0, 4);
+                                    if (percent == 1)
+                                    {
+                                        GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
+                                        k.transform.localScale = new Vector3(k.transform.localScale.x * (+1), k.transform.localScale.y, k.transform.localScale.z);
+                                    }
+                                    pos = new Vector3(i, j, 1f);
+                                }
+                            }
                         else
                         {
                             if (map[i, j - 1] == 1)
                                 Instantiate(floorcorners[2], pos, UnityEngine.Quaternion.identity);
                             else
+                            {
                                 Instantiate(floorcorners[1], pos, UnityEngine.Quaternion.identity);
+                                if (i % 2 == 0)
+                                {
+                                    pos = new Vector3(i, j + 1, 0.9f);
+                                    int percent = random.Next(1, 11);
+                                    if (percent == 1)
+                                        Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                    else
+                                        Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                                }
+                                else
+                                {
+                                    pos = new Vector3(i, j + 1, 0.9f);
+                                    int percent = random.Next(1, 6);
+                                    if (percent == 1)
+                                        Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                                }
+                                if (!visited)
+                                {
+                                    pos = new Vector3(i, j, 0.9f);
+                                    int percent = random.Next(0, 4);
+                                    if (percent == 1)
+                                    {
+                                        GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
+                                        k.transform.localScale = new Vector3(k.transform.localScale.x * (-1), k.transform.localScale.y, k.transform.localScale.z);
+                                    }
+                                    pos = new Vector3(i, j, 1f);
+                                }
+                            }
                         }
                     else
                     {
                         if (map[i - 1, j] != 1)
                             Instantiate(floorcorners[3], pos, UnityEngine.Quaternion.identity);
                         else if (map[i, j - 1] != 1)
+                        {
                             Instantiate(floorcorners[0], pos, UnityEngine.Quaternion.identity);
+                            if (i % 2 == 0)
+                            {
+                                pos = new Vector3(i, j + 1, 0.9f);
+                                int percent = random.Next(1, 6);
+                                if (percent == 1)
+                                    Instantiate(torchwithoutfire, pos, UnityEngine.Quaternion.identity);
+                                else
+                                    Instantiate(middletorch, pos, UnityEngine.Quaternion.identity);
+                            }
+                            else
+                            {
+                                pos = new Vector3(i, j + 1, 0.9f);
+                                int percent = random.Next(1, 6);
+                                if (percent == 1)
+                                    Instantiate(flag, pos, UnityEngine.Quaternion.identity);
+                            }
+                            if (!visited)
+                            {
+                                pos = new Vector3(i, j, 0.9f);
+                                int percent = random.Next(0, 4);
+                                if (percent == 1)
+                                {
+                                    GameObject k = Instantiate(floorstuff[0], pos, UnityEngine.Quaternion.identity);
+                                    k.transform.localScale = new Vector3(k.transform.localScale.x * (+1), k.transform.localScale.y, k.transform.localScale.z);
+                                }
+                                pos = new Vector3(i, j, 1f);
+                            }
+                        }
                         else if (map[i + 1, j] != 1)
                             Instantiate(floorcorners[4], pos, UnityEngine.Quaternion.identity);
                         else
@@ -1073,17 +1291,14 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
 
                 }
-                else if(map[i, j]==1)
-                    if(map[i, j-1]==2 || map[i, j - 1] <0)
+                else if (map[i, j] == 1)
+                    if (map[i, j - 1] == 2 || map[i, j - 1] < 0)
                         Instantiate(horizontalwalls[random.Next(0, horizontalwalls.Count)], pos, UnityEngine.Quaternion.identity);
                     else
                         Instantiate(verticalwalls[random.Next(0, verticalwalls.Count)], pos, UnityEngine.Quaternion.identity);
 
             }
-
-
-
-        MapGenerator.GetComponent<MiniMapGenerator>().GenerateMiniMap(map);
     }
+    
 
 }

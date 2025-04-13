@@ -9,13 +9,15 @@ public class MiniMapGenerator : MonoBehaviour
     {
         [SerializeField] GameObject panel;
         [SerializeField] List<Image> images = new List<Image>();
-    public void GenerateMiniMap(int[,] map)
+    public void GenerateMiniMap(int[,] map, bool[,] visited)
     {
+
+
+
         Image newimage;
-        Debug.Log(map.GetLength(0));
-        Debug.Log(map.GetLength(1));
         for (int i = 0; i < map.GetLength(0)-1; i++)
             for (int j = 0; j < map.GetLength(1)-1; j++)
+                if (visited[i,j])
             {
                 if (i == 0 || j == 0 || i == map.GetLength(0) - 2 || i == map.GetLength(1) - 2)
                     if (i == 0)
