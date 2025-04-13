@@ -431,7 +431,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 2.01, y: 1.83, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -739,10 +739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69fca0636651b134a88906bc34287aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 671349376359552690, guid: c247444d2b8039944a5d870c63ab07da, type: 3}
-  itemtile: {fileID: 7845765840320801393, guid: 1595fafa3ade4a3478ec91dc2c37db24, type: 3}
-  starttile: {fileID: 6409042011160355750, guid: fe36269133cfeed43af2baaf4c2c7b47, type: 3}
-  finishtile: {fileID: 5627269514452617102, guid: ab7427de1c205374c841358b962c8916, type: 3}
   sizer: 30
   sized: 30
   numbr: 15
@@ -795,6 +791,16 @@ MonoBehaviour:
   horizontaldoor: {fileID: 2548959599507642239, guid: d5933183896979848824dc7b7c0b288d, type: 3}
   verticaldoor: {fileID: 7905059488887359855, guid: 7203065b5df57594ea230e667d80b86b, type: 3}
   MapGenerator: {fileID: 862753521}
+  middletorch: {fileID: 2789542556829039854, guid: 0f68b1108ba94784cbe416721b0dbf7e, type: 3}
+  sidetorch: {fileID: 5776511494831711798, guid: 303d9a8ba5824f94a8b755288993e25e, type: 3}
+  torchwithoutfire: {fileID: 4787781510016267886, guid: 1a2d491c97c69614893c17acf43982d5, type: 3}
+  flag: {fileID: 61415343140054417, guid: 80d3cf852fd03d447badc311a50321af, type: 3}
+  floorstuff:
+  - {fileID: 7857338475899905731, guid: b2d84fac11b653848838fd33e2d8a82c, type: 3}
+  - {fileID: 6536518636503519396, guid: 1befd63eb56f626419d4d500a445e9d4, type: 3}
+  - {fileID: 2260633446277426960, guid: 7766425a6abdeef4a972fcd61db935b2, type: 3}
+  - {fileID: 5086210461686072412, guid: 08dd56e3082377b4db5fcd5c5e87249d, type: 3}
+  - {fileID: 6723651242282718115, guid: 80e03d8991126b44db8c54874296797a, type: 3}
 --- !u!4 &1492659746
 Transform:
   m_ObjectHideFlags: 0
