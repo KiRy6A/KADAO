@@ -152,12 +152,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followMouse: 0
-  followTargets: 1
+  followTargets: 0
   targets:
-  - {fileID: 0}
-  cameraRegion: {fileID: 0}
+  - {fileID: 7863529253175016117, guid: b7894c700489f47479b71c154d113d0e, type: 3}
+  cameraRegion: {fileID: 1625278032236201349, guid: b7894c700489f47479b71c154d113d0e, type: 3}
   cameraOffset: {x: 0, y: 0, z: -10}
-  cameraSpeed: 3.6
+  cameraSpeed: 2.59
   resetMargin: 0
   zoomSpeed: 0.1
   maxZoom: 0.1
