@@ -1,7 +1,5 @@
 using System.Collections;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -32,11 +30,11 @@ public class Player : MonoBehaviour
     public int Stamina { get { return (int)_stamina; } }
     public bool isRunning { get { return Input.GetKey(KeyCode.LeftShift); } }
 
-    //[HideInInspector] public Animator animator;
+    public Animator _animator;
 
     private void Start()
     {
-        //animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _stats = FindAnyObjectByType<Stats>();
     }
@@ -65,8 +63,7 @@ public class Player : MonoBehaviour
 		_x = Input.GetAxis("Horizontal");
         _y = Input.GetAxis("Vertical");
 
-        //animator.SetFloat("x", /*write source of data*/.x);
-        //animator.SetFloat("y", /*write source of data*/.y);
+        _animator.SetFloat("x", _x + (_y*_y));
     }
 
     private void FixedUpdate()
@@ -102,8 +99,8 @@ public class Player : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        //_animator.SetTrigger("Dead");
-        yield return new WaitForSeconds(5);
+        _animator.SetTrigger("Dead");
+        yield return new WaitForSeconds(1);
 
 		SceneManager.LoadScene("MainMenu");
 	}

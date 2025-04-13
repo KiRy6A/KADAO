@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
 
