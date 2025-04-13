@@ -22,7 +22,7 @@ public class ExitScript : MonoBehaviour
                     SceneManager.LoadScene("LevelScene");
 
                     else
-                        SceneManager.LoadScene("LevelScene");
+                        SceneManager.LoadScene("BossFight");
                 }
             }
 }
