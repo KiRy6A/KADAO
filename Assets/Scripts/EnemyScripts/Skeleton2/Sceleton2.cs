@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Skeleton : Enemy
+public class Sceleton2 : Enemy
 {
 	private void Start()
 	{
@@ -32,7 +32,7 @@ public class Skeleton : Enemy
 			TakeDamage(collision.GetComponent<IDamage>().Damage());
 			StartCoroutine(Stan(2f));
 		}
-		else if(collision.tag == "Player" && !_isAttacking)
+		else if (collision.tag == "Player" && !_isAttacking)
 		{
 			Stop();
 			StartAttack();

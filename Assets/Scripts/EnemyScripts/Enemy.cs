@@ -7,10 +7,11 @@ public abstract class Enemy : MonoBehaviour
 {
 	[SerializeField] protected int _hp;
 	[SerializeField] protected float _speed;
+	[SerializeField] protected Vector2 _minMaxMovementTime;
 	[SerializeField] private float _randomMovement = 1.0f;
-	[SerializeField] protected float _attackRange = 1.0f;
 	[SerializeField] private int _damage = 1;
 
+	protected private Transform _player;
 	protected Animator _controller;
 	protected Rigidbody2D _rb;
 
@@ -57,7 +58,6 @@ public abstract class Enemy : MonoBehaviour
 	protected void StartAttack()
 	{
 		_isAttacking = true;
-		_rb.linearVelocity = Vector2.zero;
 		_controller.SetTrigger("Attack");
 	}
 
@@ -77,7 +77,7 @@ public abstract class Enemy : MonoBehaviour
 		_isRunning = true;
 		_rb.linearVelocity = (new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * _randomMovement + target - (Vector2)transform.position).normalized * _speed;
 
-		yield return new WaitForSeconds(Random.Range(0.7f, 2.0f));
+		yield return new WaitForSeconds(Random.Range(_minMaxMovementTime.x, _minMaxMovementTime.y));
 
 		_isRunning = false;
 		_rb.linearVelocity = Vector2.zero;

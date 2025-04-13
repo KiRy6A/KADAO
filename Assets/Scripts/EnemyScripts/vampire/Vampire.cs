@@ -1,21 +1,46 @@
 using UnityEngine;
 
-public class Skeleton : Enemy
+public class Vampire : Enemy
 {
+	[SerializeField] private float _jumpSpeed = 2.0f;
+
+	private float _defaultSpeed;
+	private bool _isReadyJump = false;
+	private float _time = 0;
+
 	private void Start()
 	{
 		_player = FindFirstObjectByType<Player>().transform;
 		_controller = GetComponent<Animator>();
 		_rb = GetComponent<Rigidbody2D>();
+
+		_defaultSpeed = _speed;
 	}
 
 	private void Update()
 	{
+		_time += Time.deltaTime;
+		if(_time >= 5)
+		{
+			_isReadyJump = true;
+			_time = 0;
+
+			_speed = _jumpSpeed;
+		}
+
 		if (!_isStanned && !_isDead)
 		{
 			if (!_isRunning && !_isAttacking)
 			{
-				StartCoroutine(Move(_player.position));
+				if (_speed == _jumpSpeed)
+				{
+					_isReadyJump = false;
+					StartCoroutine(Move(_player.position));
+				}
+				else
+				{
+					StartCoroutine(Move(-1 * _player.position));
+				}
 			}
 			_controller.SetFloat("Velocity", _rb.linearVelocityX * _rb.linearVelocityX + _rb.linearVelocityY * _rb.linearVelocityY);
 
@@ -32,9 +57,10 @@ public class Skeleton : Enemy
 			TakeDamage(collision.GetComponent<IDamage>().Damage());
 			StartCoroutine(Stan(2f));
 		}
-		else if(collision.tag == "Player" && !_isAttacking)
+		else if (collision.tag == "Player" && !_isAttacking)
 		{
 			Stop();
+			_speed = _defaultSpeed;
 			StartAttack();
 		}
 	}
