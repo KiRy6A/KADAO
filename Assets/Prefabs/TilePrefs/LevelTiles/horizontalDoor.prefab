@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4820182461648239170}
   - component: {fileID: 5609045150604652658}
   - component: {fileID: 7591426737373007969}
-  m_Layer: 3
+  - component: {fileID: 8672168016492743215}
+  m_Layer: 0
   m_Name: horizontalDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,5 +101,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04be2763bad1b1a4ebe914bcf4ca2d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 0}
-  player: {fileID: 2487374963329852389, guid: 9d64094375a1e0648b1d9f7a6090dc00, type: 3}
+  Oppenedsp: {fileID: -1803633368, guid: 3b2642d6b86538f40becc53f58a35d54, type: 3}
+  Closedsp: {fileID: 370017655, guid: 3b2642d6b86538f40becc53f58a35d54, type: 3}
+--- !u!61 &8672168016492743215
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548959599507642239}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.16, y: 0.16}
+  m_EdgeRadius: 0
