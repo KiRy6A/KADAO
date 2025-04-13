@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a63ca6008199574d88c65c5add4f8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _outlinePrefab: {fileID: 9019225745485253213, guid: 515d1aee9bf05f24483c7bd6d149d754, type: 3}
+  _outlinePrefab: {fileID: 9019225745485253213, guid: ef3f5d54124b88444b86935895305545, type: 3}
   _spellPrefab: {fileID: 0}
-  _templateCast: {fileID: -7653882451023801575, guid: 07838cdd434318541b93d58269e3f88c, type: 3}
+  _templateCast: {fileID: 2839746384339438575, guid: 9f1dbddff905051408ddb70eba4f4ee7, type: 3}
   _name: Prayer
   _manaCost: 0
   _description: "\u0412\u044B \u043D\u0430\u0431\u0438\u0440\u0430\u0435\u0442\u0435\u0441\u044C
