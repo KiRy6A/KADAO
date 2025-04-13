@@ -7,6 +7,7 @@ TagManager:
   - Caster
   - AttackSpell
   - EnemyAttack
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -2,6 +2,7 @@ using SpellsSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Book : MonoBehaviour
 {
@@ -77,5 +78,36 @@ public class Book : MonoBehaviour
 		_castingObj = null;
 		_isCasted = false;
 		_isWaitingUp = false;
+	}
+
+	public void NextSpell()
+	{
+		++_iCurrentSpell;
+
+		if (_iCurrentSpell >= _allSpellCasters.Count)
+		{
+			_iCurrentSpell = 0;
+		}
+
+		UpdateSheet();
+	}
+
+	public void PrevSpell()
+	{
+		--_iCurrentSpell;
+
+		if (_iCurrentSpell < 0)
+		{
+			_iCurrentSpell = _allSpellCasters.Count - 1;
+		}
+
+		UpdateSheet();
+	}
+
+	private void UpdateSheet()
+	{
+		_currentSpell = _allSpellCasters[_iCurrentSpell];
+
+		GetComponentInChildren<RawImage>().texture = _currentSpell._templateCast.texture;
 	}
 }

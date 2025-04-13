@@ -24,7 +24,7 @@ public class Skeleton : Enemy
 		}
 	}
 
-	private void OnTriggerStay2D(Collider2D collision)
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.tag == "AttackSpell")
 		{
@@ -32,7 +32,11 @@ public class Skeleton : Enemy
 			TakeDamage(collision.GetComponent<IDamage>().Damage());
 			StartCoroutine(Stan(2f));
 		}
-		else if(collision.tag == "Player" && !_isAttacking)
+	}
+
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		if (collision.tag == "Player" && !_isAttacking)
 		{
 			Stop();
 			StartAttack();

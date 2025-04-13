@@ -5,7 +5,6 @@ public class Vampire : Enemy
 	[SerializeField] private float _jumpSpeed = 2.0f;
 
 	private float _defaultSpeed;
-	private bool _isReadyJump = false;
 	private float _time = 0;
 
 	private void Start()
@@ -22,9 +21,7 @@ public class Vampire : Enemy
 		_time += Time.deltaTime;
 		if(_time >= 5)
 		{
-			_isReadyJump = true;
 			_time = 0;
-
 			_speed = _jumpSpeed;
 		}
 
@@ -34,7 +31,6 @@ public class Vampire : Enemy
 			{
 				if (_speed == _jumpSpeed)
 				{
-					_isReadyJump = false;
 					StartCoroutine(Move(_player.position));
 				}
 				else
@@ -49,7 +45,7 @@ public class Vampire : Enemy
 		}
 	}
 
-	private void OnTriggerStay2D(Collider2D collision)
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.tag == "AttackSpell")
 		{
@@ -57,10 +53,13 @@ public class Vampire : Enemy
 			TakeDamage(collision.GetComponent<IDamage>().Damage());
 			StartCoroutine(Stan(2f));
 		}
-		else if (collision.tag == "Player" && !_isAttacking)
+	}
+
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		if (collision.tag == "Player" && !_isAttacking)
 		{
 			Stop();
-			_speed = _defaultSpeed;
 			StartAttack();
 		}
 	}

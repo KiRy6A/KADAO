@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton2 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5987579979269996699, guid: f334ed22ff5aeab46905c9bc4a3a23fc, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 6825936404917886340, guid: f334ed22ff5aeab46905c9bc4a3a23fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.87

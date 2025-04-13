@@ -200,7 +200,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 50616500}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 243588592}
+        m_TargetAssemblyTypeName: Book, Assembly-CSharp
+        m_MethodName: PrevSpell
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &50616500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6431373}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -295,6 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _allSpellCasters:
   - {fileID: 6512853054471835549, guid: 47490e5433551f846bca1c9d8465e70f, type: 3}
+  - {fileID: 2555424982666965788, guid: 025e6836fd8737149b6b81c996f6e0fe, type: 3}
 --- !u!114 &243588593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,7 +1076,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 19b20f8db0fd42a4aa7a4bcd3898c61b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1280,7 +1293,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1823518739}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 243588592}
+        m_TargetAssemblyTypeName: Book, Assembly-CSharp
+        m_MethodName: NextSpell
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1823518739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1294,7 +1319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6431373}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
